@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tài Khoản - XOPSCAMACC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===========================
+           GLOBAL RESET & VARIABLES
+           =========================== */
+        :root {
+            --primary-color: #ff4757; 
+            --secondary-color: #2ed573;
+            --bg-dark: #1e272e;
+            --bg-card: #2f3542;
+            --text-light: #f1f2f6;
+            --text-gray: #a4b0be;
+            --header-bg: #111520;
+            --footer-bg: #0a0a0a;
+            --neon-blue: #00b4ff;
+            --neon-green: #00ffb2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            /* Sửa lại layout để Header/Footer full width */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===========================
+           HEADER STYLES
+           =========================== */
+        .topbar {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid #181c2b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+        .logo-icon {
+            width: 32px; height: 32px; border-radius: 6px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+            color: #05101f; font-weight: 800; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-text { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.1rem; }
+
+        .nav { display: flex; gap: 20px; }
+        .nav a {
+            font-size: 14px; text-decoration: none; color: #c4c8da;
+            text-transform: uppercase; font-weight: 500; transition: 0.3s;
+        }
+        .nav a:hover { color: var(--neon-blue); }
+
+        /* User Logged In Header Style */
+        .user-logged-in {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 15px; border-radius: 30px;
+            cursor: pointer; transition: 0.3s; border: 1px solid transparent;
+        }
+        .user-logged-in:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--neon-blue);
+        }
+        .header-avatar-img {
+            width: 32px; height: 32px; border-radius: 50%;
+            border: 2px solid var(--neon-green); object-fit: cover;
+        }
+        .header-username { font-weight: 700; font-size: 0.9rem; color: #fff; }
+
+        /* ===========================
+           MAIN CONTENT STYLES
+           =========================== */
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            min-height: 700px;
+            border: 1px solid #3d4a5d;
+            /* Căn giữa container */
+            margin: 40px auto; 
+            flex: 1; /* Đẩy footer xuống đáy nếu nội dung ngắn */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px; background-color: #252b36; padding: 30px 20px;
+            border-right: 1px solid #3d4a5d; display: flex; flex-direction: column;
+        }
+        .user-info-box { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #3d4a5d; }
+        .avatar {
+            width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary-color);
+            margin: 0 auto 15px; background-image: url('https://i.pravatar.cc/150?img=11'); background-size: cover;
+        }
+        .username { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        .balance-box {
+            background: rgba(46, 213, 115, 0.1); color: var(--secondary-color);
+            padding: 8px 15px; border-radius: 20px; display: inline-block;
+            font-weight: bold; font-size: 0.95rem; margin-top: 5px; border: 1px solid var(--secondary-color);
+        }
+        .nav-menu { list-style: none; }
+        .nav-item { margin-bottom: 8px; }
+        .nav-link {
+            display: flex; align-items: center; padding: 12px 15px; color: var(--text-gray);
+            text-decoration: none; border-radius: 6px; transition: 0.3s; font-weight: 500;
+        }
+        .nav-link i { margin-right: 12px; width: 20px; text-align: center; }
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-color); color: #fff; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Content Area */
+        .main-content { flex: 1; padding: 40px; }
+        .section-header {
+            font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color); padding-left: 15px; text-transform: uppercase;
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: 0; } }
+
+        /* Tables & Forms */
+        .game-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        .game-table th { text-align: left; padding: 15px; color: var(--text-gray); font-weight: 500; border-bottom: 1px solid #3d4a5d; }
+        .game-table td { background: #252b36; padding: 15px; vertical-align: middle; }
+        .game-table tr td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        .game-table tr td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+        
+        .acc-info { display: flex; align-items: center; gap: 15px; }
+        .game-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+        .credential-box {
+            background: #1e272e; padding: 5px 10px; border-radius: 4px; font-family: monospace;
+            border: 1px solid #3d4a5d; display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; margin-bottom: 5px;
+        }
+        .copy-btn { background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 14px; }
+        .btn { padding: 10px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-primary { background: var(--primary-color); color: #fff; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; color: var(--text-gray); }
+        .form-input {
+            width: 100%; padding: 12px; background: #1e272e; border: 1px solid #3d4a5d;
+            border-radius: 6px; color: #fff; font-size: 1rem;
+        }
+
+        /* ===========================
+           FOOTER STYLES
+           =========================== */
+        .custom-footer { background: var(--footer-bg); padding: 40px 20px; color: #bfbfbf; font-size: 15px; border-top: 1px solid #181c2b; }
+        .footer-row { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+        .footer-col { flex: 1; min-width: 250px; }
+        .custom-footer p { margin: 8px 0; }
+        .yellow { color: #ffcc00; font-weight: bold; }
+        .white { color: #fff; font-weight: 700; }
+        
+        .footer-box { display: flex; align-items: center; background: #151515; border: 1px solid #333; padding: 12px 16px; border-radius: 6px; margin-top: 15px; }
+        .icon-call { font-size: 28px; margin-right: 15px; color: #ffcc00; }
+        
+        .social-icons { display: flex; gap: 15px; margin-top: 15px; }
+        .social-btn {
+            width: 40px; height: 40px; background: #222; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; color: #fff; text-decoration: none;
+            transition: 0.3s; font-size: 18px;
+        }
+        .social-btn.fb:hover { background: #1877f2; }
+        .social-btn.yt:hover { background: #ff0000; }
+        .social-btn.ig:hover { background: #e1306c; }
+        .social-btn.tk:hover { background: #000; border: 1px solid #333; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container { flex-direction: column; margin-top: 0; border-radius: 0; }
+            .sidebar { width: 100%; border-right: none; }
+            .topbar-inner { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .nav { width: 100%; justify-content: center; overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
+            .footer-row { flex-direction: column; text-align: center; }
+            .footer-box { justify-content: center; }
+            .social-icons { justify-content: center; }
+            .game-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">X</div>
+                <span class="logo-text">XOPSCAMACC</span>
+            </a>
+            
+            <nav class="nav">
+                <a href="/index.html">Trang chủ</a>
+                <a href="#">Hướng dẫn</a>
+                <a href="/user/lienhe.html">Liên hệ</a>
+                <a href="/user/naptien.html">Nạp tiền</a>
+            </nav>
+
+            <div class="user-logged-in">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="header-avatar-img">
+                <span class="header-username">Gamer123</span>
+                <i class="fas fa-chevron-down" style="font-size: 12px; color: #aaa;"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="user-info-box">
+                <div class="avatar"></div>
+                <div class="username">hung</div>
+                <div class="balance-box">
+                    <i class="fas fa-wallet"></i> 500.000đ
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="switchTab(event, 'info')">
+                        <i class="fas fa-user-astronaut"></i> Hồ sơ cá nhân
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" onclick="switchTab(event, 'acc-list')">
+                        <i class="fas fa-gamepad"></i> Nick đã mua
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="switchTab(event, 'history')">
+                        <i class="fas fa-history"></i> Lịch sử giao dịch
+                    </a>
+                </li>
+                <li class="nav-item" style="margin-top: 20px;">
+                    <a href="#" class="nav-link" style="color: #ff6b6b; background: rgba(255,107,107,0.1);">
+                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            
+            <div id="acc-list" class="tab-content active">
+                <h2 class="section-header">Kho tài khoản game</h2>
+                <table class="game-table">
+                    <thead>
+                        <tr>
+                            <th>Game / Rank</th>
+                            <th>Thông tin đăng nhập</th>
+                            <th>Giá tiền</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="acc-info">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg" class="game-thumb" alt="LOL">
+                                    <div>
+                                        <div style="font-weight: bold; color: #fff;">Liên Minh (LOL)</div>
+                                        <div style="font-size: 0.85rem; color: var(--text-gray);">Rank: Kim Cương 2</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="min-width: 250px;">
+                                <div class="credential-box">
+                                    <span>TK: <strong id="user1">gamervip99</strong></span>
+                                    <button class="copy-btn" onclick="copyToClipboard('user1')"><i class="fas fa-copy"></i></button>
+                                </div>
+                                <div class="credential-box">
+                                    <span>MK: <strong id="pass1">hunter2***</strong></span>
+                                    <button class="copy-btn" onclick="copyToClipboard('pass1')"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </td>
+                            <td style="color: var(--secondary-color); font-weight: bold;">350.000đ</td>
+                            <td>
+                                <button class="btn" style="background: #3d4a5d; color: #fff; font-size: 0.8rem;">Chi tiết</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="info" class="tab-content">
+                <h2 class="section-header">Thông tin tài khoản</h2>
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Tên hiển thị</label>
+                        <input type="text" class="form-input" value="Gamer123">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="gamer@gmail.com" disabled style="opacity: 0.5;">
+                    </div>
+                    <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                </form>
+            </div>
+
+            <div id="history" class="tab-content">
+                <h2 class="section-header">Lịch sử giao dịch</h2>
+                <table class="game-table" style="font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th>Mã GD</th>
+                            <th>Nội dung</th>
+                            <th>Số tiền</th>
+                            <th>Thời gian</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#TX1102</td>
+                            <td>Nạp thẻ Viettel</td>
+                            <td style="color: var(--secondary-color);">+100.000đ</td>
+                            <td>29/12/2025 10:30</td>
+                            <td><span style="color: var(--secondary-color);">Thành công</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="custom-footer">
+        <div class="footer-row">
+            <div class="footer-col">
+                <p>Địa chỉ: Cẩm Sơn - Anh Sơn - Nghệ An</p>
+                <p>© 2025, Copyright by XOPSCAMACC - Shop Acc Uy Tín.</p>
+                <div class="footer-box hotline-box">
+                    <div class="icon-call">📞</div>
+                    <div>
+                        <p><span class="yellow">Hotline:</span> 0966 344 123</p>
+                        <p style="font-weight: bold;">Hoàng Tuấn Hưng</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+               <p>Thời gian làm việc: <b class="white">GIAO DỊCH TỰ ĐỘNG 24/24</b> các ngày trong tuần</p>
+
+      <p>Acc đã bán ra: <span class="yellow">204.267</span></p>
+      <p>Tổng số thành viên: <span class="yellow">286.253</span></p>
+      <p>Đang online: <span id="online" class="yellow">1</span></p>
+      <p>Số lần truy cập: <span class="yellow">40.105.320</span></p>
+            </div>
+
+            <div class="footer-col">
+                <p>Liên kết chia sẻ:</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/varst.inv" target="_blank"><img src="fb.png"></a>
+        <a href="https://www.youtube.com/@XopsCamAcc" target="_blank"><img src="yt.png"></a>
+        <a href="https://www.instagram.com/hungw_ht/" target="_blank"><img src="ig.png"></a>
+        <a href="https://www.tiktok.com/@ten_tiktok" target="_blank"><img src="news.png"></a>
+        <a href="https://www.pinterest.com/#shop" target="_blank"><img src="pin.png"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="profile-game.js"></script>
+</body>
+</html>
