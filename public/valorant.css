@@ -1,0 +1,388 @@
+body {
+  margin: 0;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #0d1017;
+  color: #ffffff;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.topbar {
+    background: rgba(0, 0, 0, .65);
+  background-color: #111520;
+  border-bottom: 1px solid #181c2b;
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #00b4ff, #00ffb2);
+  color: #05101f;
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #c4c8da;
+  text-transform: uppercase;
+}
+
+.nav a:hover {
+  color: #ffffff;
+}
+
+.auth {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-outline,
+.btn-primary {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: #2c344a;
+}
+
+.btn-outline:hover {
+  border-color: #00b4ff;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00b4ff, #00ffb2);
+  color: #05101f;
+  border: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+  .topbar-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  #btnFilter {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .accounts-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+.auth .btn {
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #00b3ff, #00ffd1);
+  border-radius: 6px;
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.auth .btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+.custom-footer {
+  background: #0a0a0a;
+  padding: 35px 20px;
+  color: #bfbfbf;
+  font-size: 15px;
+}
+
+.footer-row {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 250px;
+}
+
+.custom-footer p {
+  margin: 6px 0;
+}
+
+.yellow {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.white {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Hộp hotline */
+.footer-box {
+  display: flex;
+  align-items: center;
+  background: #151515;
+  border: 1px solid #333;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.icon-call {
+  font-size: 28px;
+  margin-right: 10px;
+  color: #ffcc00;
+}
+
+/* Social Icon */
+.social-icons img {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.social-icons img:hover {
+  transform: scale(1.15);
+}
+
+/* ===== TIÊU ĐỀ TRANG ===== */
+.page-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 20px 0 10px;
+}
+
+/* ===== GRID ACC ===== */
+.valo-grid {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 25px;
+}
+
+.valo-card {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.valo-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+/* ===== INFO BOX ===== */
+.valo-info {
+  padding: 16px 18px;
+  flex: 1;
+}
+
+.valo-info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.valo-rank {
+  margin: 4px 0 18px;
+  font-size: 15px;
+}
+
+/* ===== GIÁ ===== */
+.valo-price-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.price-card {
+  color: #e53935;
+}
+
+.price-atm {
+  color: #333;
+}
+
+.unit {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== NÚT ===== */
+.valo-btn-box {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.btn-detail {
+  background-color: #333;
+  color: #fff;
+}
+.btn-buy {
+  background-color: #ff8c00;
+  color: #fff;
+}
+
+.btn-detail:hover {
+  background-color: #222;
+}
+.btn-buy:hover {
+  background-color: #ff7000;
+}
+
+.icon-eye,
+.icon-cart {
+  font-size: 16px;
+}
+.valo-header {
+  display: flex;
+  align-items: center;     /* căn logo + chữ cùng chiều cao */
+  gap: 12px;               /* khoảng cách giữa logo và chữ */
+  padding: 10px 0;
+}
+.valo-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.valo-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;    /* nếu bạn muốn màu khác thì đổi ở đây */
+}
+
+.divider {
+  width: 100%;
+  margin-top: 10px;
+  border-top: 2px solid #ffcc00;
+}
+
+.valo-content {
+  margin-top: 20px;
+}
+
+.valo-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.valo-info {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.valo-info li {
+  margin: 10px 0;
+}
+
+.star {
+  color: #ffcc00;
+  margin-right: 5px;
+}
+.valo-container {
+  background-color: #fff;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

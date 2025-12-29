@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mua Acc</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Nút Mua ngay -->
+<button class="buy-btn" onclick="openModal()">Mua ngay</button>
+
+<!-- MODAL -->
+<div class="modal" id="buyModal">
+    <div class="modal-content">
+        
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2>THÔNG TIN MUA ACC</h2>
+
+        <div class="info-box">
+            <p><strong>Danh mục:</strong> Nick Liên Minh Trắng Thông Tin</p>
+            <p><strong>Giá tiền:</strong> 20.000.000₫ ATM / 25.000.000₫ CARD</p>
+            <p><strong>Thông tin:</strong> Trắng Thông Tin – Đổi được Email & Mật khẩu</p>
+        </div>
+
+        <div class="detail-box">
+            <p><strong>Cấp:</strong> 433</p>
+            <p><strong>Rank đơn đôi:</strong> Bạc II</p>
+            <p><strong>Khung:</strong> Bạc</p>
+            <p><strong>Trang phục:</strong> 1713</p>
+            <p><strong>Tướng:</strong> 170</p>
+            <p><strong>Rank DTCL:</strong> Chưa Rank</p>
+            <p><strong>Linh Thú:</strong> 938</p>
+        </div>
+
+        <input type="text" placeholder="Nhập mã giảm giá (nếu có)" class="input-discount">
+
+        <button class="confirm-btn">Xác nhận</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

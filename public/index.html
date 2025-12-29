@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop Acc LMHT / TFT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS riêng cho module acc -->
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- HEADER ĐƠN GIẢN -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-icon">X</div>
+        <span class="logo-text">XOPSCAMACC</span>
+      </div>
+      <nav class="nav">
+        <a href="#">Trang chủ</a>
+        <a href="/user/huongdanmuaacc.html">Hướng dẫn</a>
+        <a href="/user/lienhe.html">Liên hệ</a>
+        <a href="/user/naptien.html">Nạp tiền</a>
+      </nav>
+      <div class="auth" id="auth-section">
+   <a class="btn-outline" href="user/login.html">Đăng Nhập</a>
+   <a class="btn-primary" href="user/register.html">Đăng Ký</a>
+</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="page">
+
+    <!-- TIÊU ĐỀ -->
+    <section class="section-header">
+      <div class="section-header-inner">
+        <h1>Shop tài khoản game</h1>
+        <p>Mua bán tài khoản Liên Minh Huyền Thoại, Đấu Trường Chân Lý..., giá rẻ – uy tín.</p>
+      </div>
+    </section>
+
+
+    <!-- BỘ LỌC / TÌM KIẾM -->
+    <section class="section-filters">
+      <div class="filters-container">
+        <input type="text" id="keyword" placeholder="Tìm theo tên gói, game, rank..." />
+
+        <select id="game">
+          <option value="">-- Game --</option>
+          <option value="LMHT">LMHT</option>
+          <option value="TFT">TFT</option>
+          <option value="TFT">LIÊN QUÂN</option>
+          <option value="TFT">VALORANT</option>
+          <option value="TFT">TỐC CHIẾN</option>
+          <option value="TFT">FREE FIRE</option>
+        </select>
+
+        <select id="rank">
+          <option value="">-- Rank --</option>
+          <option>Sắt</option>
+          <option>Đồng</option>
+          <option>Bạc</option>
+          <option>Vàng</option>
+          <option>Bạch Kim</option>
+          <option>Kim Cương</option>
+          <option>Cao Thủ</option>
+          <option>Đại Cao Thủ</option>
+          <option>Thách Đấu</option>
+        </select>
+
+        <select id="price">
+          <option value="">-- Giá --</option>
+          <option value="1">Dưới 100K</option>
+          <option value="2">100K - 500K</option>
+          <option value="3">500K - 1 Triệu</option>
+          <option value="4">Trên 1 Triệu</option>
+        </select>
+
+        <button id="btnFilter">Lọc</button>
+      </div>
+    </section>
+
+    <!-- DANH MỤC GAME -->
+<section class="game-section">
+  <div class="game-section-inner">
+
+    <!-- TIÊU ĐỀ CHUNG -->
+    <div class="game-section-header">
+      <h2>DANH MỤC GAME</h2>
+      <div class="line blue"></div>
+    </div>
+
+    <!-- NHÓM 1: LIÊN MINH HUYỀN THOẠI -->
+    <div class="game-group">
+      <div class="group-title">
+        <span>LIÊN MINH HUYỀN THOẠI</span>
+        <div class="line yellow"></div>
+      </div>
+
+      <div class="game-grid">
+        <!-- CARD 1 -->
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="lmht1.jpg" alt="Liên Minh tự chọn">
+          </div>
+          <h3>LIÊN MINH HUYỀN THOẠI TRẮNG THÔNG TIN</h3>
+          <p>Số tài khoản: 8.833</p>
+          <p>Đã bán: 125.334</p>
+          <button onclick="window.location.href='lmht_tuchon.html'">Xem tất cả</button>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="lmht2.jpg" alt="LMHT giảm giá">
+          </div>
+          <h3>MỤC ACC GIẢM GIÁ TRẮNG THÔNG TIN</h3>
+          <p>Số tài khoản: 3.990</p>
+          <p>Đã bán: 16.158</p>
+          <button onclick="window.location.href='lmht_giamgia.html'">Xem tất cả</button>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="lmht3.jpg" alt="LMHT thông thạo">
+          </div>
+          <h3>ACC LIÊN MINH ZIN THÔNG THẠO</h3>
+          <p>Số tài khoản: 438</p>
+          <p>Đã bán: 2.790</p>
+          <button onclick="window.location.href='lmht_.thongthao.html'">Xem tất cả</button>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="lmht4.jpg" alt="LMHT server nước ngoài">
+          </div>
+          <h3>LIÊN MINH SERVER NƯỚC NGOÀI</h3>
+          <p>Số tài khoản: 88</p>
+          <p>Đã bán: 114</p>
+          <button onclick="window.location.href='lmht_svnuocngoai.html'">Xem tất cả</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NHÓM 2: ĐẤU TRƯỜNG CHÂN LÝ -->
+    <div class="game-group">
+      <div class="group-title">
+        <span>ĐẤU TRƯỜNG CHÂN LÝ</span>
+        <div class="line yellow"></div>
+      </div>
+
+      <div class="game-grid">
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="dtcl1.jpg" alt="ĐTCL tự chọn">
+          </div>
+          <h3>ACC ĐTCL - TFT TỰ CHỌN - GIÁ SIÊU RẺ</h3>
+          <p>Số tài khoản: 4.315</p>
+          <p>Đã bán: 10.879</p>
+          <button onclick="window.location.href='dtcl_tuchon.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="dtcl2.jpg" alt="ĐTCL pêt tím">
+          </div>
+          <h3>ACC ĐTCL - TFT PÉT TÍM TỰ CHỌN 70K</h3>
+          <p>Số tài khoản: 11.102</p>
+          <p>Đã bán: 6.634</p>
+          <button onclick="window.location.href='dtcl_pettim.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="dtcl3.jpg" alt="Thử vận may pêt tím">
+          </div>
+          <h3>THỬ VẬN MAY PÉT TÍM ĐTCL 40K</h3>
+          <p>Số tài khoản: 665</p>
+          <p>Đã bán: 1.859</p>
+          <button onclick="window.location.href='thuvanmaypettim.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="dtcl4.jpg" alt="Săn pêt tím">
+          </div>
+          <h3>SĂN PÉT TÍM HÀNG HIỆU</h3>
+          <p>Số tài khoản: 1.085</p>
+          <p>Đã bán: 420</p>
+          <button onclick="window.location.href='sanpettim.html'">Xem tất cả</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NHÓM 3: GAME KHÁC -->
+    <div class="game-group">
+      <div class="group-title">
+        <span>GAME KHÁC</span>
+        <div class="line yellow"></div>
+      </div>
+
+      <div class="game-grid">
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="lienquan.jpg" alt="Liên Quân">
+          </div>
+          <h3>LIÊN QUÂN</h3>
+          <p>Số tài khoản: 500+</p>
+          <p>Đã bán: 10.000+</p>
+          <button onclick="window.location.href='lienquan.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="valorant.jpg" alt="Valorant">
+          </div>
+          <h3>VALORANT</h3>
+          <p>Số tài khoản: 500+</p>
+          <p>Đã bán: 10.000+</p>
+          <button onclick="window.location.href='valorant.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="tocchien.jpg" alt="Tốc chiến">
+          </div>
+          <h3>TỐC CHIẾN</h3>
+          <p>Số tài khoản: 500+</p>
+          <p>Đã bán: 10.000+</p>
+          <button onclick="window.location.href='tocchien.html'">Xem tất cả</button>
+        </div>
+
+        <div class="game-card">
+          <div class="card-img-wrap">
+            <img src="freefire.jpg" alt="Free Fire">
+          </div>
+          <h3>FREE FIRE</h3>
+          <p>Số tài khoản: 500+</p>
+          <p>Đã bán: 10.000+</p>
+          <button onclick="window.location.href='freefire.html'">Xem tất cả</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- JS -->
+  <script src="index.js"></script>
+  <script>
+  function randomOnline() {
+    const online = Math.floor(Math.random() * (35 - 5) + 5);
+    document.getElementById("online").textContent = online;
+  }
+  randomOnline();
+  setInterval(randomOnline, 60000); // cập nhật mỗi 60s
+</script>
+
+</body>
+<footer class="custom-footer">
+
+  <div class="footer-row">
+
+    <!-- Cột 1 -->
+    <div class="footer-col">
+      <p>Địa chỉ: Cẩm Sơn - Anh Sơn - Nghệ An</p>
+      <p>© 2025, Copyright by XOPSCAAMACC - Shop Acc Uy Tín.</p>
+
+      <div class="footer-box hotline-box">
+        <div class="icon-call">📞</div>
+        <div>
+          <p><span class="yellow">Hotline:</span> 0966 344 123</p>
+          <p style="font-weight: bold;">Hoàng Tuấn Hưng</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột 2 -->
+    <div class="footer-col">
+      <p>Thời gian làm việc: <b class="white">GIAO DỊCH TỰ ĐỘNG 24/24</b> các ngày trong tuần</p>
+
+      <p>Acc đã bán ra: <span class="yellow">204.267</span></p>
+      <p>Tổng số thành viên: <span class="yellow">286.253</span></p>
+      <p>Đang online: <span id="online" class="yellow">1</span></p>
+      <p>Số lần truy cập: <span class="yellow">40.105.320</span></p>
+    </div>
+
+    <!-- Cột 3 -->
+    <div class="footer-col">
+      <p>Liên kết chia sẻ:</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/varst.inv" target="_blank"><img src="fb.png"></a>
+        <a href="https://www.youtube.com/@XopsCamAcc" target="_blank"><img src="yt.png"></a>
+        <a href="https://www.instagram.com/hungw_ht/" target="_blank"><img src="ig.png"></a>
+        <a href="https://www.tiktok.com/@ten_tiktok" target="_blank"><img src="news.png"></a>
+        <a href="https://www.pinterest.com/#shop" target="_blank"><img src="pin.png"></a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</html>

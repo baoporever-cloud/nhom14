@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nạp tiền - XOPSCAMACC</title>
+
+  <link rel="icon" type="image/png" href="XOPSCAMACC_logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- CSS chung của web -->
+  <link rel="stylesheet" href="acc.css">
+  <!-- CSS riêng cho trang nạp tiền -->
+  <link rel="stylesheet" href="naptien.css">
+</head>
+<body>
+  <!-- HEADER GIỐNG TRANG CHỦ -->
+   <!-- HEADER ĐƠN GIẢN -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-icon">X</div>
+        <span class="logo-text">XOPSCAMACC</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Trang chủ</a>
+        <a href=" /user/huongdanmuaacc.html">Hướng dẫn</a>
+        <a href=" /user/lienhe.html">Liên hệ</a>
+        <a href="#">Nạp tiền</a>
+      </nav>
+      <div class="auth">
+
+         <a class="btn-outline" href=" /user/login.html">Đăng Nhập</a>
+  <a class="btn-primary" href=" /user/register.html">Đăng Ký</a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- NỘI DUNG NẠP TIỀN -->
+  <main>
+    <section class="topup-page">
+      <div class="topup-inner">
+
+        <!-- Cột trái: nạp thẻ / momo -->
+        <div class="topup-left">
+          <h1>NẠP TIỀN VÀO TÀI KHOẢN</h1>
+          <p class="topup-desc">Vui lòng đăng nhập trước khi nạp để hệ thống cộng tiền chính xác vào tài khoản.</p>
+
+          <div class="topup-tabs">
+            <button class="topup-tab active" data-type="card">Nạp thẻ cào</button>
+            <button class="topup-tab" data-type="momo">Nạp MOMO / ATM</button>
+          </div>
+
+          <!-- FORM NẠP THẺ -->
+          <form id="topupForm" class="topup-form" data-type="card">
+            <div class="form-row">
+              <label>Loại thẻ</label>
+              <select id="telco" required>
+                <option value="">-- Chọn nhà mạng --</option>
+                <option value="Viettel">Viettel</option>
+                <option value="Mobifone">Mobifone</option>
+                <option value="Vinaphone">Vinaphone</option>
+                <option value="Garena">Garena</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Mệnh giá</label>
+              <select id="amount" required>
+                <option value="">-- Chọn mệnh giá --</option>
+                <option value="10000">10.000</option>
+                <option value="20000">20.000</option>
+                <option value="50000">50.000</option>
+                <option value="100000">100.000</option>
+                <option value="200000">200.000</option>
+                <option value="500000">500.000</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Mã số thẻ</label>
+              <input type="text" id="cardCode" placeholder="Nhập mã số thẻ" required>
+            </div>
+
+            <div class="form-row">
+              <label>Số serial</label>
+              <input type="text" id="serial" placeholder="Nhập số serial" required>
+            </div>
+
+            <button type="submit" class="btn-topup">NẠP THẺ</button>
+          </form>
+
+          <!-- BOX NẠP MOMO / ATM -->
+          <div id="topupMomoBox" class="topup-momo hidden">
+            <h2>HƯỚNG DẪN NẠP MOMO / ATM</h2>
+            <p>1. Chuyển khoản MOMO / Ngân hàng đến số:</p>
+            <p><b>0123 456 789 - NGUYỄN VĂN A</b></p>
+            <p>2. Nội dung chuyển khoản:</p>
+            <p><b>NAP &lt;tên tài khoản trên shop&gt;</b></p>
+            <p>3. Sau khi chuyển thành công, hệ thống tự động cộng tiền trong 1–2 phút.</p>
+            <button class="btn-topup" type="button">ĐÃ HIỂU</button>
+          </div>
+        </div>
+
+        <!-- Cột phải: khuyến mãi / bảng tỷ lệ -->
+        <div class="topup-right">
+          <div class="topup-box">
+            <h2>Khuyến mãi hiện tại</h2>
+            <ul>
+              <li>Nạp thẻ cào: <b>100K = 50K</b> vào shop.</li>
+              <li>Nạp MOMO / ATM: <b>+25% bonus</b> giá trị nạp.</li>
+            </ul>
+          </div>
+
+          <div class="topup-box">
+            <h2>Tỷ lệ quy đổi</h2>
+            <table class="topup-table">
+              <tr>
+                <th>Hình thức</th>
+                <th>Mệnh giá</th>
+                <th>Nhận được</th>
+              </tr>
+              <tr>
+                <td>Thẻ cào</td>
+                <td>100.000</td>
+                <td>50.000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>MOMO / ATM</td>
+                <td>100.000</td>
+                <td>125.000 VNĐ</td>
+              </tr>
+              <tr>
+                <td>MOMO / ATM</td>
+                <td>200.000</td>
+                <td>250.000 VNĐ</td>
+              </tr>
+            </table>
+            <p class="topup-note">
+              ⚠ Lưu ý: Sai mệnh giá / sai nhà mạng có thể bị mất thẻ.  
+              Hãy kiểm tra kỹ trước khi xác nhận nạp!
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- có thể dùng chung footer hiện tại của bạn ở đây -->
+
+  <script src="naptien.js"></script>
+</body>
+<footer class="custom-footer">
+
+  <div class="footer-row">
+
+    <!-- Cột 1 -->
+    <div class="footer-col">
+      <p>Địa chỉ: Cẩm Sơn - Anh Sơn - Nghệ An</p>
+      <p>© 2025, Copyright by XOPSCAAMACC - Shop Acc Uy Tín.</p>
+
+      <div class="footer-box hotline-box">
+        <div class="icon-call">📞</div>
+        <div>
+          <p><span class="yellow">Hotline:</span> 0966 344 123</p>
+          <p style="font-weight: bold;">Hoàng Tuấn Hưng</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột 2 -->
+    <div class="footer-col">
+      <p>Thời gian làm việc: <b class="white">GIAO DỊCH TỰ ĐỘNG 24/24</b> các ngày trong tuần</p>
+
+      <p>Acc đã bán ra: <span class="yellow">204.267</span></p>
+      <p>Tổng số thành viên: <span class="yellow">286.253</span></p>
+      <p>Đang online: <span id="online" class="yellow">1</span></p>
+      <p>Số lần truy cập: <span class="yellow">40.105.320</span></p>
+    </div>
+
+    <!-- Cột 3 -->
+    <div class="footer-col">
+      <p>Liên kết chia sẻ:</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/varst.inv" target="_blank"><img src="fb.png"></a>
+        <a href="https://www.youtube.com/@XopsCamAcc" target="_blank"><img src="yt.png"></a>
+        <a href="https://www.instagram.com/hungw_ht/" target="_blank"><img src="ig.png"></a>
+        <a href="https://www.tiktok.com/@ten_tiktok" target="_blank"><img src="news.png"></a>
+        <a href="https://www.pinterest.com/#shop" target="_blank"><img src="pin.png"></a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</html>

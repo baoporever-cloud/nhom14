@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liên hệ - XOPSCAMACC</title>
+
+  <link rel="icon" type="image/png" href="XOPSCAMACC_logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lienhe.css">
+</head>
+<body>
+
+  <!-- HEADER ĐƠN GIẢN -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-icon">X</div>
+        <span class="logo-text">XOPSCAMACC</span>
+      </div>
+      <nav class="nav">
+        <a href="/index.html">Trang chủ</a>
+        <a href=" /user/huongdanmuaacc.html">Hướng dẫn</a>
+        <a href="#">Liên hệ</a>
+        <a href=" /user/naptien.html">Nạp tiền</a>
+      </nav>
+      <div class="auth">
+
+         <a class="btn-outline" href=" /user/login.html">Đăng Nhập</a>
+  <a class="btn-primary" href=" /user/register.html">Đăng Ký</a>
+  
+      </div>
+    </div>
+  </header>
+
+  <main class="contact-page">
+
+    <!-- HERO -->
+    <section class="contact-hero">
+      <div class="contact-container">
+        <h1>Liên hệ hỗ trợ</h1>
+        <p>
+          Nếu bạn gặp vấn đề trong quá trình nạp tiền, mua acc hoặc sử dụng dịch vụ,
+          hãy liên hệ với XOPSCAMACC qua các kênh dưới đây. Admin hỗ trợ nhanh – nhiệt tình.
+        </p>
+      </div>
+    </section>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <section class="contact-main">
+      <div class="contact-container contact-grid">
+
+        <!-- THÔNG TIN LIÊN HỆ -->
+        <div class="contact-card">
+          <h2>Thông tin liên hệ</h2>
+          <p><b>Chủ shop:</b> Hoàng Tuấn Hưng</p>
+          <p><b>Địa chỉ:</b> Cẩm Sơn, Anh Sơn, Nghệ An</p>
+
+          <div class="contact-info-block">
+            <p><b>Hotline / Zalo:</b> <span class="hl">0966 344 123</span></p>
+            <p><b>Email:</b> <span class="hl">support@xopscamacc.vn</span></p>
+            <p><b>Thời gian làm việc:</b> Giao dịch tự động 24/24 – hỗ trợ khi online.</p>
+          </div>
+
+          <h3>Kênh liên lạc nhanh</h3>
+          <ul class="contact-list">
+            <li>💬 <b>Facebook:</b> Fanpage XOPSCAMACC</li>
+            <li>💬 <b>Zalo:</b> 0966 344 123</li>
+            <li>💬 <b>Messenger:</b> Nút chat trên góc phải màn hình</li>
+          </ul>
+
+          <p class="contact-note">
+            Khi nhắn tin, vui lòng gửi kèm: <b>tên tài khoản</b> trên shop,
+            <b>ID đơn hàng</b> hoặc <bảnh chụp màn hình lỗi</b> để được hỗ trợ nhanh hơn.
+          </p>
+        </div>
+
+        <!-- FORM GỬI YÊU CẦU -->
+        <div class="contact-card">
+          <h2>Gửi yêu cầu hỗ trợ</h2>
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <label for="name">Tên của bạn</label>
+              <input type="text" id="name" required placeholder="Nhập tên">
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email / Zalo</label>
+              <input type="text" id="email" required placeholder="Email hoặc số Zalo">
+            </div>
+
+            <div class="form-row">
+              <label for="orderId">ID đơn hàng (nếu có)</label>
+              <input type="text" id="orderId" placeholder="#123456">
+            </div>
+
+            <div class="form-row">
+              <label for="message">Nội dung cần hỗ trợ</label>
+              <textarea id="message" rows="4" required placeholder="Mô tả chi tiết vấn đề bạn gặp phải..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-contact">Gửi yêu cầu</button>
+            <p class="contact-small">
+              * Đây là form demo phía giao diện. Sau này bạn có thể nối API hoặc gửi mail tự động.
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- (tuỳ chọn) MAP / ẢNH -->
+    <!--
+    <section class="contact-map">
+      <div class="contact-container">
+        <iframe ...> </iframe>
+      </div>
+    </section>
+    -->
+
+  </main>
+
+  <!-- Bạn có thể dùng lại footer shop ở đây nếu muốn -->
+  <!-- <footer class="custom-footer"> ... </footer> -->
+
+  <script>
+    // Demo: chặn submit thật và hiện thông báo
+    document.getElementById("contactForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      alert("Đã gửi yêu cầu hỗ trợ (demo). Sau này bạn nối API hoặc gửi mail ở đây.");
+      this.reset();
+    });
+  </script>
+</body>
+<footer class="custom-footer">
+
+  <div class="footer-row">
+
+    <!-- Cột 1 -->
+    <div class="footer-col">
+      <p>Địa chỉ: Cẩm Sơn - Anh Sơn - Nghệ An</p>
+      <p>© 2025, Copyright by XOPSCAAMACC - Shop Acc Uy Tín.</p>
+
+      <div class="footer-box hotline-box">
+        <div class="icon-call">📞</div>
+        <div>
+          <p><span class="yellow">Hotline:</span> 0966 344 123</p>
+          <p style="font-weight: bold;">Hoàng Tuấn Hưng</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột 2 -->
+    <div class="footer-col">
+      <p>Thời gian làm việc: <b class="white">GIAO DỊCH TỰ ĐỘNG 24/24</b> các ngày trong tuần</p>
+
+      <p>Acc đã bán ra: <span class="yellow">204.267</span></p>
+      <p>Tổng số thành viên: <span class="yellow">286.253</span></p>
+      <p>Đang online: <span id="online" class="yellow">1</span></p>
+      <p>Số lần truy cập: <span class="yellow">40.105.320</span></p>
+    </div>
+
+    <!-- Cột 3 -->
+    <div class="footer-col">
+      <p>Liên kết chia sẻ:</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/varst.inv" target="_blank"><img src="fb.png"></a>
+        <a href="https://www.youtube.com/@XopsCamAcc" target="_blank"><img src="yt.png"></a>
+        <a href="https://www.instagram.com/hungw_ht/" target="_blank"><img src="ig.png"></a>
+        <a href="https://www.tiktok.com/@ten_tiktok" target="_blank"><img src="news.png"></a>
+        <a href="https://www.pinterest.com/#shop" target="_blank"><img src="pin.png"></a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</html>

@@ -1,0 +1,374 @@
+body {
+  margin: 0;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #0d1017;
+  color: #ffffff;
+}
+/* ===========================
+   HEADER
+   =========================== */
+
+.topbar {
+    background: rgba(0, 0, 0, .65);
+  background-color: #111520;
+  border-bottom: 1px solid #181c2b;
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #00b4ff, #00ffb2);
+  color: #05101f;
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0px 0px 6px rgba(0,255,255,0.4);
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #c4c8da;
+  text-transform: uppercase;
+}
+
+.nav a:hover {
+  color: #ffffff;
+}
+
+.auth {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-outline,
+.btn-primary {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: #2c344a;
+}
+
+.btn-outline:hover {
+  border-color: #00b4ff;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00b4ff, #00ffb2);
+  color: #05101f;
+  border: none;
+}
+/* ===== PAGE LIÊN HỆ ===== */
+
+.contact-page {
+  background-color: #060814;
+  color: #ffffff;
+}
+
+/* HERO */
+.contact-hero {
+  padding: 26px 0 18px;
+  border-bottom: 1px solid #151b2a;
+  background: radial-gradient(circle at top, #151b2a, #060814);
+}
+
+.contact-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.contact-hero h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.contact-hero p {
+  margin: 0;
+  font-size: 14px;
+  color: #cfd6ff;
+}
+
+/* MAIN */
+.contact-main {
+  padding: 24px 0 32px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+/* CARD */
+.contact-card {
+  background-color: #111520;
+  border-radius: 8px;
+  border: 1px solid #22263a;
+  padding: 16px 18px;
+  font-size: 14px;
+}
+
+.contact-card h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.contact-card h3 {
+  margin: 12px 0 6px;
+  font-size: 15px;
+}
+
+/* Khối info */
+.contact-info-block {
+  background-color: #0b1020;
+  border-radius: 6px;
+  padding: 10px 12px;
+  border: 1px solid #22263a;
+  margin: 8px 0 10px;
+}
+
+.contact-info-block p {
+  margin: 4px 0;
+}
+
+.hl {
+  color: #00ffe5;
+  font-weight: 600;
+}
+
+/* List kênh liên lạc */
+.contact-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 10px;
+}
+
+.contact-list li {
+  margin: 4px 0;
+}
+
+/* ghi chú */
+.contact-note {
+  font-size: 13px;
+  color: #d6ddff;
+}
+
+/* FORM */
+.contact-form .form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-form label {
+  font-size: 13px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 7px 9px;
+  border-radius: 4px;
+  border: 1px solid #2c3148;
+  background-color: #0f1320;
+  color: #e5e5e5;
+  font-size: 13px;
+  outline: none;
+  resize: vertical;
+}
+
+.btn-contact {
+  margin-top: 4px;
+  padding: 8px 18px;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(90deg, #00b4ff, #00ffb2);
+  color: #06101f;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-contact:hover {
+  filter: brightness(1.05);
+}
+
+.contact-small {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #9fa8d8;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+  .topbar-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  #btnFilter {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .accounts-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+.auth .btn {
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #00b3ff, #00ffd1);
+  border-radius: 6px;
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.auth .btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+.custom-footer {
+  background: #0a0a0a;
+  padding: 35px 20px;
+  color: #bfbfbf;
+  font-size: 15px;
+}
+
+.footer-row {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 250px;
+}
+
+.custom-footer p {
+  margin: 6px 0;
+}
+
+.yellow {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.white {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Hộp hotline */
+.footer-box {
+  display: flex;
+  align-items: center;
+  background: #151515;
+  border: 1px solid #333;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.icon-call {
+  font-size: 28px;
+  margin-right: 10px;
+  color: #ffcc00;
+}
+
+/* Social Icon */
+.social-icons img {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.social-icons img:hover {
+  transform: scale(1.15);
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  .footer-row{
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-box{
+    justify-content: center;
+  }
+
+  .social-icons{
+    justify-content: center;
+    display: flex;
+  }
+}
