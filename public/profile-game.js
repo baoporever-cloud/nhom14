@@ -1,146 +1,121 @@
-const API_URL = 'http://localhost:3000'; // Đổi port nếu cần
+const API_URL = 'http://localhost:3000'; // Đổi port nếu bạn dùng port khác
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Gọi cả 3 hàm cùng lúc khi tải trang
+    // Gọi các hàm tải dữ liệu ngay khi vào trang
     loadUserProfile();
     loadInventory();
     loadHistory();
 });
 
-// ---------------------------------------------------------
-// 1. TẢI THÔNG TIN CÁ NHÂN (Tên, Tiền, Email)
-// ---------------------------------------------------------
+// 1. Tải thông tin cá nhân (Header, Sidebar, Form)
 function loadUserProfile() {
     fetch(`${API_URL}/api/info`)
         .then(res => res.json())
         .then(user => {
-            // Cập nhật Header & Sidebar
-            document.querySelectorAll('.username, .header-username').forEach(el => el.innerText = user.Fullname);
-            document.querySelector('.balance-text').innerText = formatMoney(user.Balance);
+            // Cập nhật tên ở Header và Sidebar
+            document.getElementById('header-username').innerText = user.Fullname;
+            document.getElementById('sidebar-username').innerText = user.Fullname;
+            
+            // Cập nhật số dư
+            document.getElementById('sidebar-balance').innerText = formatMoney(user.Balance);
             
             // Cập nhật Form
             document.getElementById('inpName').value = user.Fullname;
-            const emailInput = document.querySelector('input[type="email"]');
-            if(emailInput) emailInput.value = user.Email;
+            document.getElementById('inpEmail').value = user.Email;
         })
-        .catch(err => console.error("Lỗi tải Profile:", err));
+        .catch(err => console.error("Lỗi tải profile:", err));
 }
 
-// ---------------------------------------------------------
-// 2. TẢI KHO TÀI KHOẢN (NICK ĐÃ MUA)
-// ---------------------------------------------------------
+// 2. Tải danh sách Nick đã mua
 function loadInventory() {
-    const tbody = document.querySelector('#acc-list tbody'); // Tìm body của bảng nick
-    if (!tbody) return;
-
     fetch(`${API_URL}/api/inventory`)
         .then(res => res.json())
         .then(data => {
-            tbody.innerHTML = ''; // Xóa dữ liệu cũ
+            const tbody = document.getElementById('inventory-body');
+            tbody.innerHTML = ''; // Xóa sạch cũ
 
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">Chưa mua tài khoản nào</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Chưa có tài khoản nào.</td></tr>';
                 return;
             }
 
             data.forEach((acc, index) => {
-                const tr = `
+                const row = `
                     <tr>
                         <td>
                             <div class="acc-info">
                                 <img src="${acc.ImageURL}" class="game-thumb" alt="Game">
                                 <div>
                                     <div style="font-weight: bold; color: #fff;">${acc.GameName}</div>
-                                    <div style="font-size: 0.85rem; color: var(--text-gray);">${acc.RankInfo}</div>
+                                    <div style="font-size: 0.85rem; color: #a4b0be;">${acc.RankInfo}</div>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div class="credential-box">
-                                <span>TK: <strong id="user${index}">${acc.AccUser}</strong></span>
-                                <button class="copy-btn" onclick="copyToClipboard('user${index}')"><i class="fas fa-copy"></i></button>
+                                <span>TK: <strong id="u${index}">${acc.AccUser}</strong></span>
+                                <button class="copy-btn" onclick="copyToClipboard('u${index}')"><i class="fas fa-copy"></i></button>
                             </div>
                             <div class="credential-box">
-                                <span>MK: <strong id="pass${index}">${acc.AccPass}</strong></span>
-                                <button class="copy-btn" onclick="copyToClipboard('pass${index}')"><i class="fas fa-copy"></i></button>
+                                <span>MK: <strong id="p${index}">${acc.AccPass}</strong></span>
+                                <button class="copy-btn" onclick="copyToClipboard('p${index}')"><i class="fas fa-copy"></i></button>
                             </div>
                         </td>
-                        <td style="color: var(--secondary-color); font-weight: bold;">${formatMoney(acc.Price)}</td>
-                        <td>
-                            <button class="btn" style="background: #3d4a5d; color: #fff; font-size: 0.8rem;">Chi tiết</button>
-                        </td>
+                        <td style="color: #2ed573; font-weight: bold;">${formatMoney(acc.Price)}</td>
+                        <td><button class="btn" style="background: #3d4a5d; color: #fff; font-size: 0.8rem;">Chi tiết</button></td>
                     </tr>
                 `;
-                tbody.innerHTML += tr;
+                tbody.innerHTML += row;
             });
-        })
-        .catch(err => console.error("Lỗi tải Inventory:", err));
+        });
 }
 
-// ---------------------------------------------------------
-// 3. TẢI LỊCH SỬ GIAO DỊCH
-// ---------------------------------------------------------
+// 3. Tải Lịch sử giao dịch
 function loadHistory() {
-    const tbody = document.querySelector('#history tbody');
-    if (!tbody) return;
-
     fetch(`${API_URL}/api/history`)
         .then(res => res.json())
         .then(data => {
+            const tbody = document.getElementById('history-body');
             tbody.innerHTML = '';
 
             data.forEach(trans => {
-                // Đổi màu: Nếu số tiền < 0 là màu đỏ, > 0 là màu xanh
-                const color = trans.Amount < 0 ? '#ff4757' : '#2ed573';
-                const sign = trans.Amount > 0 ? '+' : ''; // Thêm dấu + nếu là tiền nạp
-
-                const tr = `
+                const color = trans.Amount < 0 ? '#ff4757' : '#2ed573'; // Đỏ nếu trừ tiền, Xanh nếu cộng
+                const row = `
                     <tr>
                         <td>#TX${trans.TransID}</td>
                         <td>${trans.Content}</td>
-                        <td style="color: ${color}; font-weight:bold;">
-                            ${sign}${formatMoney(trans.Amount)}
-                        </td>
+                        <td style="color: ${color}; font-weight: bold;">${formatMoney(trans.Amount)}</td>
                         <td>${new Date(trans.CreatedDate).toLocaleString('vi-VN')}</td>
-                        <td><span style="color: var(--secondary-color);">${trans.Status}</span></td>
+                        <td><span style="color: #2ed573;">${trans.Status}</span></td>
                     </tr>
                 `;
-                tbody.innerHTML += tr;
+                tbody.innerHTML += row;
             });
-        })
-        .catch(err => console.error("Lỗi tải History:", err));
+        });
 }
 
-// ---------------------------------------------------------
-// 4. CHỨC NĂNG CẬP NHẬT TÊN (LƯU)
-// ---------------------------------------------------------
+// 4. Hàm Lưu tên mới
 function saveProfile() {
-    const nameInput = document.getElementById('inpName');
-    const newName = nameInput.value.trim();
-
+    const newName = document.getElementById('inpName').value.trim();
     if (!newName) return alert("Vui lòng nhập tên!");
 
     fetch(`${API_URL}/api/update-name`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ newName: newName })
+        body: JSON.stringify({ newName })
     })
     .then(res => res.text())
     .then(data => {
         if (data === 'success') {
             alert("Lưu thành công!");
-            // Cập nhật lại giao diện ngay lập tức
-            document.querySelectorAll('.username, .header-username').forEach(el => el.innerText = newName);
+            loadUserProfile(); // Tải lại thông tin để cập nhật giao diện
         } else {
-            alert("Có lỗi xảy ra!");
+            alert("Lỗi khi lưu!");
         }
-    })
-    .catch(err => console.error(err));
+    });
 }
 
-// ---------------------------------------------------------
-// 5. CÁC HÀM TIỆN ÍCH (Copy, Chuyển Tab, Format Tiền)
-// ---------------------------------------------------------
+// --- CÁC HÀM TIỆN ÍCH ---
 function switchTab(event, tabId) {
     event.preventDefault();
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -151,9 +126,7 @@ function switchTab(event, tabId) {
 
 function copyToClipboard(elementId) {
     var copyText = document.getElementById(elementId).innerText;
-    navigator.clipboard.writeText(copyText).then(() => {
-        alert('Đã copy: ' + copyText);
-    });
+    navigator.clipboard.writeText(copyText).then(() => alert('Đã copy: ' + copyText));
 }
 
 function formatMoney(amount) {
