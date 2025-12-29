@@ -204,6 +204,7 @@
             .social-icons { justify-content: center; }
             .game-table { display: block; overflow-x: auto; }
         }
+        .social-icons img { width: 32px; height: 32px; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -222,9 +223,9 @@
                 <a href="/user/naptien.html">Nạp tiền</a>
             </nav>
 
-            <div class="user-logged-in">
+           <div class="user-logged-in">
                 <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="header-avatar-img">
-                <span class="header-username">Gamer123</span>
+                <span class="header-username" id="header-username">Loading...</span>
                 <i class="fas fa-chevron-down" style="font-size: 12px; color: #aaa;"></i>
             </div>
         </div>
@@ -234,9 +235,9 @@
         <div class="sidebar">
             <div class="user-info-box">
                 <div class="avatar"></div>
-                <div class="username">hung</div>
+                <div class="username" id="sidebar-username">Loading...</div>
                 <div class="balance-box">
-                    <i class="fas fa-wallet"></i> 500.000đ
+                    <i class="fas fa-wallet"></i> <span id="sidebar-balance">0đ</span>
                 </div>
             </div>
             
@@ -256,11 +257,6 @@
                         <i class="fas fa-history"></i> Lịch sử giao dịch
                     </a>
                 </li>
-                <li class="nav-item" style="margin-top: 20px;">
-                    <a href="#" class="nav-link" style="color: #ff6b6b; background: rgba(255,107,107,0.1);">
-                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                    </a>
-                </li>
             </ul>
         </div>
 
@@ -277,33 +273,8 @@
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="acc-info">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg" class="game-thumb" alt="LOL">
-                                    <div>
-                                        <div style="font-weight: bold; color: #fff;">Liên Minh (LOL)</div>
-                                        <div style="font-size: 0.85rem; color: var(--text-gray);">Rank: Kim Cương 2</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="min-width: 250px;">
-                                <div class="credential-box">
-                                    <span>TK: <strong id="user1">gamervip99</strong></span>
-                                    <button class="copy-btn" onclick="copyToClipboard('user1')"><i class="fas fa-copy"></i></button>
-                                </div>
-                                <div class="credential-box">
-                                    <span>MK: <strong id="pass1">hunter2***</strong></span>
-                                    <button class="copy-btn" onclick="copyToClipboard('pass1')"><i class="fas fa-copy"></i></button>
-                                </div>
-                            </td>
-                            <td style="color: var(--secondary-color); font-weight: bold;">350.000đ</td>
-                            <td>
-                                <button class="btn" style="background: #3d4a5d; color: #fff; font-size: 0.8rem;">Chi tiết</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="inventory-body">
+                        </tbody>
                 </table>
             </div>
 
@@ -312,13 +283,13 @@
                 <form>
                     <div class="form-group">
                         <label class="form-label">Tên hiển thị</label>
-                        <input type="text" class="form-input" value="Gamer123">
+                        <input type="text" id="inpName" class="form-input" placeholder="Tên hiển thị">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" value="gamer@gmail.com" disabled style="opacity: 0.5;">
+                        <input type="email" id="inpEmail" class="form-input" disabled style="opacity: 0.5;">
                     </div>
-                    <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProfile()">Lưu thay đổi</button>
                 </form>
             </div>
 
@@ -334,15 +305,8 @@
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>#TX1102</td>
-                            <td>Nạp thẻ Viettel</td>
-                            <td style="color: var(--secondary-color);">+100.000đ</td>
-                            <td>29/12/2025 10:30</td>
-                            <td><span style="color: var(--secondary-color);">Thành công</span></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="history-body">
+                        </tbody>
                 </table>
             </div>
 
