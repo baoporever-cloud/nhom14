@@ -126,7 +126,31 @@ app.post('/api/topup', async (req, res) => {
         res.status(500).json({ success: false, message: "Lỗi Server" });
     }
 });
+// --- API 3: LẤY KHO ĐỒ (NICK ĐÃ MUA) ---
+app.get('/api/inventory', async (req, res) => {
+    try {
+        const pool = await connectDB();
+        // Lấy danh sách nick của UserID = 1
+        const result = await pool.request()
+            .query("SELECT * FROM Inventory WHERE UserID = 1");
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 
+// --- API 4: LẤY LỊCH SỬ GIAO DỊCH ---
+app.get('/api/history', async (req, res) => {
+    try {
+        const pool = await connectDB();
+        // Lấy lịch sử của UserID = 1, sắp xếp mới nhất lên đầu
+        const result = await pool.request()
+            .query("SELECT * FROM Transactions WHERE UserID = 1 ORDER BY CreatedDate DESC");
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 // Chạy Server
 const PORT = 3000;
 // Trong file server.js
