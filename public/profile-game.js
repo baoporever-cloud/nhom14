@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000'; // Đổi port nếu bạn dùng port khác
+const API_URL = 'http://localhost:3000';
 
 document.addEventListener("DOMContentLoaded", () => {
     // Gọi các hàm tải dữ liệu ngay khi vào trang
@@ -7,32 +7,31 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHistory();
 });
 
-// 1. Tải thông tin cá nhân (Header, Sidebar, Form)
+// 1. Tải thông tin User
 function loadUserProfile() {
     fetch(`${API_URL}/api/info`)
         .then(res => res.json())
         .then(user => {
-            // Cập nhật tên ở Header và Sidebar
+            // Cập nhật Header & Sidebar
+            // Lưu ý: SQL của bạn dùng cột 'Fullname' và 'Balance'
             document.getElementById('header-username').innerText = user.Fullname;
             document.getElementById('sidebar-username').innerText = user.Fullname;
-            
-            // Cập nhật số dư
             document.getElementById('sidebar-balance').innerText = formatMoney(user.Balance);
             
             // Cập nhật Form
             document.getElementById('inpName').value = user.Fullname;
             document.getElementById('inpEmail').value = user.Email;
         })
-        .catch(err => console.error("Lỗi tải profile:", err));
+        .catch(err => console.error(err));
 }
 
-// 2. Tải danh sách Nick đã mua
+// 2. Tải Kho Đồ (Inventory)
 function loadInventory() {
     fetch(`${API_URL}/api/inventory`)
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById('inventory-body');
-            tbody.innerHTML = ''; // Xóa sạch cũ
+            tbody.innerHTML = ''; 
 
             if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Chưa có tài khoản nào.</td></tr>';
@@ -44,10 +43,10 @@ function loadInventory() {
                     <tr>
                         <td>
                             <div class="acc-info">
-                                <img src="${acc.ImageURL}" class="game-thumb" alt="Game">
+                                <img src="${acc.ImageURL || 'https://via.placeholder.com/50'}" class="game-thumb" alt="Game">
                                 <div>
                                     <div style="font-weight: bold; color: #fff;">${acc.GameName}</div>
-                                    <div style="font-size: 0.85rem; color: #a4b0be;">${acc.RankInfo}</div>
+                                    <div style="font-size: 0.85rem; color: #a4b0be;">${acc.RankInfo || 'Rank: Chưa rõ'}</div>
                                 </div>
                             </div>
                         </td>
@@ -70,7 +69,7 @@ function loadInventory() {
         });
 }
 
-// 3. Tải Lịch sử giao dịch
+// 3. Tải Lịch Sử Giao Dịch
 function loadHistory() {
     fetch(`${API_URL}/api/history`)
         .then(res => res.json())
@@ -79,7 +78,7 @@ function loadHistory() {
             tbody.innerHTML = '';
 
             data.forEach(trans => {
-                const color = trans.Amount < 0 ? '#ff4757' : '#2ed573'; // Đỏ nếu trừ tiền, Xanh nếu cộng
+                const color = trans.Amount < 0 ? '#ff4757' : '#2ed573';
                 const row = `
                     <tr>
                         <td>#TX${trans.TransID}</td>
@@ -94,7 +93,7 @@ function loadHistory() {
         });
 }
 
-// 4. Hàm Lưu tên mới
+// 4. Lưu Tên Mới
 function saveProfile() {
     const newName = document.getElementById('inpName').value.trim();
     if (!newName) return alert("Vui lòng nhập tên!");
@@ -108,14 +107,12 @@ function saveProfile() {
     .then(data => {
         if (data === 'success') {
             alert("Lưu thành công!");
-            loadUserProfile(); // Tải lại thông tin để cập nhật giao diện
-        } else {
-            alert("Lỗi khi lưu!");
+            loadUserProfile(); // Load lại để thấy tên mới ngay
         }
     });
 }
 
-// --- CÁC HÀM TIỆN ÍCH ---
+// Tiện ích
 function switchTab(event, tabId) {
     event.preventDefault();
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -124,8 +121,8 @@ function switchTab(event, tabId) {
     event.currentTarget.classList.add('active');
 }
 
-function copyToClipboard(elementId) {
-    var copyText = document.getElementById(elementId).innerText;
+function copyToClipboard(id) {
+    var copyText = document.getElementById(id).innerText;
     navigator.clipboard.writeText(copyText).then(() => alert('Đã copy: ' + copyText));
 }
 
