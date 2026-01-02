@@ -98,14 +98,45 @@ function logout() {
     }
 }
 
-// --- HÀM 4: MUA HÀNG (DEMO) ---
-function buyNow(id) {
-    // Kiểm tra xem đã đăng nhập chưa
-    const user = localStorage.getItem("user");
-    if (!user) {
+// --- HÀM 4: MUA HÀNG (ĐÃ HOÀN THIỆN) ---
+function buyNow(productID) {
+    // 1. Kiểm tra dữ liệu đăng nhập trong LocalStorage
+    const userStr = localStorage.getItem("user");
+    
+    // Nếu chưa đăng nhập
+    if (!userStr) {
         alert("Vui lòng đăng nhập để mua tài khoản!");
-        window.location.href = "/user/login.html";
+        // Lưu ý: Kiểm tra lại đường dẫn file login của bạn cho đúng
+        window.location.href = "/user/login.html"; 
         return;
     }
-    alert(`Bạn đã chọn mua acc số #${id}. Chức năng thanh toán đang phát triển!`);
+
+    // 2. Phân tích chuỗi JSON để lấy User ID
+    try {
+        const user = JSON.parse(userStr);
+        
+        // Cố gắng lấy ID (phòng trường hợp bạn lưu là 'id', 'UserID' hay 'userid')
+        const userId = user.id || user.UserID || user.userid;
+
+        if (!userId) {
+            alert("Lỗi phiên đăng nhập: Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.");
+            // Xóa dữ liệu lỗi và tải lại
+            localStorage.removeItem("user");
+            window.location.reload();
+            return;
+        }
+
+        // 3. Hỏi xác nhận mua hàng (Tránh bấm nhầm)
+        const xacNhan = confirm(`Bạn có chắc chắn muốn mua Acc mã số #${productID} không?`);
+        
+        if (xacNhan) {
+            // 4. Chuyển hướng sang trang xử lý giao dịch (buy.html)
+            // Truyền ID sản phẩm và ID người dùng lên thanh địa chỉ
+            window.location.href = `/buy.html?id=${productID}&userid=${userId}`;
+        }
+
+    } catch (e) {
+        console.error("Lỗi phân tích dữ liệu user:", e);
+        alert("Có lỗi xảy ra với thông tin tài khoản. Vui lòng đăng nhập lại.");
+    }
 }
