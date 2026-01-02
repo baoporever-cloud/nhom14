@@ -182,7 +182,8 @@
         const productId = urlParams.get('id');
         const userId = urlParams.get('userid');
 
-        const API_URL = "http://localhost:3000/buy"; 
+        // SỬA 1: Đường dẫn API phải khớp với server.js (/api/buy)
+        const API_URL = "http://localhost:3000/api/buy"; 
 
         // Kiểm tra dữ liệu đầu vào
         if (!productId || !userId) {
@@ -190,33 +191,45 @@
             return;
         }
 
-        // 2. GỌI API ĐỂ MUA HÀNG
-        fetch(`${API_URL}?id=${productId}&userid=${userId}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Lỗi kết nối Server");
-                return response.json();
+        // 2. GỌI API ĐỂ MUA HÀNG (SỬA 2: Dùng POST thay vì GET)
+        fetch(API_URL, {
+            method: 'POST', // Quan trọng: Phải là POST
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                userId: userId, 
+                productId: productId 
             })
-            .then(data => {
-                if (data.status === "ThanhCong") {
-                    showSuccess(data);
-                    // --- GỌI HÀM CẬP NHẬT SỐ DƯ TẠI ĐÂY ---
-                    updateLocalBalance(userId); 
-                } else {
-                    showError(data.message);
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                showError("Không thể kết nối đến Server Node.js.");
-            });
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Lỗi kết nối Server");
+            return response.json();
+        })
+        .then(data => {
+            // SỬA 3: Kiểm tra biến 'success' trả về từ server mới
+            if (data.success === true) {
+                showSuccess(data);
+                // Cập nhật số dư hiển thị
+                updateLocalBalance(userId); 
+            } else {
+                showError(data.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showError("Lỗi kết nối: Server chưa bật hoặc sai đường dẫn.");
+        });
     });
 
-    // --- Hàm hiển thị Thành công ---
+    // --- CÁC HÀM HỖ TRỢ (GIỮ NGUYÊN LOGIC CŨ, CHỈ CHỈNH SỬA NHỎ) ---
+
     function showSuccess(data) {
         hideLoading();
         
         const iconBox = document.getElementById("iconBox");
-        iconBox.innerHTML = "🎉";
+        iconBox.innerHTML = '<i class="fa-solid fa-circle-check"></i>'; // Hoặc icon mặc định
+        iconBox.innerText = "🎉"; // Emoji cho đơn giản
         iconBox.className = "icon-box success-icon";
 
         document.getElementById("resultTitle").innerText = "Giao dịch thành công!";
@@ -230,21 +243,20 @@
         document.getElementById("actionButtons").innerHTML = `<a href="index.html" class="btn btn-home">Tiếp tục mua sắm</a>`;
     }
 
-    // --- Hàm hiển thị Thất bại ---
     function showError(message) {
         hideLoading();
         const iconBox = document.getElementById("iconBox");
-        iconBox.innerHTML = "😢";
+        iconBox.innerText = "😢";
         iconBox.className = "icon-box error-icon";
 
         document.getElementById("resultTitle").innerText = "Giao dịch thất bại";
         document.getElementById("resultMessage").innerText = message;
         
-        if (message && message.toLowerCase().includes("không đủ")) {
-                document.getElementById("actionButtons").innerHTML = 
-                `<a href="deposit.html" class="btn btn-copy" style="background:#4caf50;">Nạp tiền ngay</a> 
-                    <br><br> 
-                    <a href="index.html" class="btn btn-retry">Chọn acc khác</a>`;
+        if (message && message.toLowerCase().includes("số dư")) {
+             document.getElementById("actionButtons").innerHTML = 
+             `<a href="/user/naptien.html" class="btn btn-copy" style="background:#4caf50;">Nạp tiền ngay</a> 
+              <br><br> 
+              <a href="index.html" class="btn btn-retry">Chọn acc khác</a>`;
         } else {
             document.getElementById("actionButtons").innerHTML = `<a href="index.html" class="btn btn-retry">Quay lại Shop</a>`;
         }
@@ -262,26 +274,20 @@
         });
     }
 
-    // --- [QUAN TRỌNG] HÀM CẬP NHẬT SỐ DƯ MỚI ---
+    // --- HÀM CẬP NHẬT SỐ DƯ ---
     async function updateLocalBalance(userId) {
         try {
-            // Gọi API lấy thông tin mới nhất từ Server (chứa số dư đã trừ)
+            // API lấy thông tin user (GET)
             const res = await fetch(`http://localhost:3000/api/info?userid=${userId}`);
             const updatedInfo = await res.json();
 
             if (updatedInfo) {
-                // Lấy user hiện tại từ localStorage
                 let currentUser = localStorage.getItem("user");
                 if (currentUser) {
                     currentUser = JSON.parse(currentUser);
-                    
-                    // Cập nhật số dư mới vào object
+                    // Cập nhật số dư mới
                     currentUser.balance = updatedInfo.Balance;
-                    
-                    // Lưu ngược lại vào localStorage
                     localStorage.setItem("user", JSON.stringify(currentUser));
-                    
-                    console.log("Đã cập nhật số dư mới trong localStorage:", updatedInfo.Balance);
                 }
             }
         } catch (e) {
