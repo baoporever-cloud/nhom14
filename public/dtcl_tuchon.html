@@ -1,92 +1,65 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ACC DTCL TỰ CHỌN - XOPSCAMACC</title>
-  <link rel="stylesheet" href="dtcl_tuchon.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shop Acc Game - XOPSCAMACC</title>
+
+  <link rel="icon" type="image/png" href="XOPSCAMACC_logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="lmht_tuchon.css">
 </head>
 <body>
 
-<!-- HEADER ĐƠN GIẢN -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="logo">
-        <div class="logo-icon">X</div>
-        <span class="logo-text">XOPSCAMACC</span>
+        <div class="logo-icon">X</div><span class="logo-text">XOPSCAMACC</span>
       </div>
       <nav class="nav">
-        <a href="/index.html">Trang chủ</a>
+        <a href="index.html">Trang chủ</a>
         <a href="#">Hướng dẫn</a>
         <a href="/user/lienhe.html">Liên hệ</a>
         <a href="/user/naptien.html">Nạp tiền</a>
       </nav>
-      <div class="auth" id="auth-section">
-    <a class="btn-outline" href="/user/login.html">Đăng Nhập</a>
-    <a class="btn-primary" href="/user/register.html">Đăng Ký</a>
-</div>
+      <div class="auth">
+        <a class="btn-outline-login" href="/user/login.html">Đăng Nhập</a>
+        <a class="btn-primary-reg" href="/user/register.html">Đăng Ký</a>
+      </div>
     </div>
   </header>
 
-<main class="sale-page">
+  <main class="lmht-page">
+    <section class="lmht-hero">
+      <div class="lmht-container">
+        <h1>DTCL Tự Chọn</h1>
+        <p>Hệ thống tự động cập nhật từ Database SQL</p>
+      </div>
+    </section>
 
-  <!-- BANNER THÔNG BÁO -->
-  <section class="sale-banner">
-    <div class="sale-container">
-      <p class="sale-title">
-        TÀI KHOẢN LMHT - ĐTCL TRÊN WEB LÀ TÀI KHOẢN RIOT TRẮNG THÔNG TIN :
-        <span class="hl-yellow">ĐỔI ĐƯỢC MAIL VÀ MẬT KHẨU</span>
-      </p>
-      <p class="sale-sub">
-        MỌI THẮC MẮC CÁC BẠN NHẮN TIN CHO SHOP QUA FACEBOOK :
-        <span class="hl-yellow">TẠI ĐÂY</span> HOẶC ZALO <span class="hl-yellow">0966 344 123</span>
-      </p>
+    <section class="product-section">
+      <div class="lmht-container">
+        <div class="section-header-row">
+            <h3 id="count-label">Đang tải dữ liệu...</h3>
+        </div>
+
+        <div class="product-grid" id="product-list" data-category="DTCL"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="custom-footer">
+    <div class="footer-row">
+      <div class="footer-col">
+        <p>© 2025 XOPSCAMACC. All rights reserved.</p>
+      </div>
     </div>
-  </section>
-</main>
+  </footer>
+
+  <script src="products.js"></script>
 
 </body>
-<footer class="custom-footer">
-
-  <div class="footer-row">
-
-    <!-- Cột 1 -->
-    <div class="footer-col">
-      <p>Địa chỉ: Cẩm Sơn - Anh Sơn - Nghệ An</p>
-      <p>© 2025, Copyright by XOPSCAAMACC - Shop Acc Uy Tín.</p>
-
-      <div class="footer-box hotline-box">
-        <div class="icon-call">📞</div>
-        <div>
-          <p><span class="yellow">Hotline:</span> 0966 344 123</p>
-          <p style="font-weight: bold;">Hoàng Tuấn Hưng</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cột 2 -->
-    <div class="footer-col">
-      <p>Thời gian làm việc: <b class="white">GIAO DỊCH TỰ ĐỘNG 24/24</b> các ngày trong tuần</p>
-
-      <p>Acc đã bán ra: <span class="yellow">204.267</span></p>
-      <p>Tổng số thành viên: <span class="yellow">286.253</span></p>
-      <p>Đang online: <span id="online" class="yellow">1</span></p>
-      <p>Số lần truy cập: <span class="yellow">40.105.320</span></p>
-    </div>
-
-    <!-- Cột 3 -->
-    <div class="footer-col">
-      <p>Liên kết chia sẻ:</p>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/varst.inv" target="_blank"><img src="fb.png"></a>
-        <a href="https://www.youtube.com/@XopsCamAcc" target="_blank"><img src="yt.png"></a>
-        <a href="https://www.instagram.com/hungw_ht/" target="_blank"><img src="ig.png"></a>
-        <a href="https://www.tiktok.com/@ten_tiktok" target="_blank"><img src="news.png"></a>
-        <a href="https://www.pinterest.com/#shop" target="_blank"><img src="pin.png"></a>
-      </div>
-    </div>
-
-  </div>
-
-</footer>
 </html>

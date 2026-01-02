@@ -212,18 +212,17 @@ app.get('/api/products/:categoryCode', async (req, res) => {
 });
 
 // =============================================================
-// API 9: XỬ LÝ MUA HÀNG (Sửa lỗi tên hàm connect)
+// API 9: XỬ LÝ MUA HÀNG (Đã sửa method thành POST và đường dẫn /api/buy)
 // =============================================================
-app.get('/buy', async (req, res) => {
+app.post('/api/buy', async (req, res) => {
     try {
-        const productId = req.query.id;
-        const userId = req.query.userid;
+        // Lấy dữ liệu từ body (do client gửi lên dạng JSON)
+        const { userId, productId } = req.body;
 
         if (!productId || !userId) {
-            return res.status(400).json({ status: 'Loi', message: 'Thiếu thông tin (ID sản phẩm hoặc User).' });
+            return res.status(400).json({ success: false, message: 'Thiếu thông tin giao dịch.' });
         }
 
-        // --- SỬA LỖI Ở ĐÂY: Dùng connectDB() thay vì connectToDb() ---
         const pool = await connectDB();
 
         // Gọi Stored Procedure 'sp_MuaNgay'
@@ -234,19 +233,29 @@ app.get('/buy', async (req, res) => {
 
         if (result.recordset.length > 0) {
             const data = result.recordset[0];
-            res.json({
-                status: data.TrangThai,      
-                message: data.ThongBao,
-                account: data.GameAccount || '',
-                password: data.GamePassword || ''
-            });
+            
+            // Kiểm tra kết quả từ SQL trả về
+            if (data.TrangThai === 'ThanhCong') {
+                res.json({
+                    success: true,      // Frontend đang check biến này
+                    message: data.ThongBao,
+                    account: data.GameAccount,
+                    password: data.GamePassword
+                });
+            } else {
+                // Trường hợp lỗi nghiệp vụ (hết tiền, đã bán...)
+                res.json({
+                    success: false,
+                    message: data.ThongBao
+                });
+            }
         } else {
-            res.json({ status: 'Loi', message: 'Không nhận được phản hồi từ Database.' });
+            res.status(500).json({ success: false, message: 'Lỗi Database không phản hồi.' });
         }
 
     } catch (err) {
         console.error("Lỗi server:", err);
-        res.status(500).json({ status: 'Loi', message: 'Lỗi Server: ' + err.message });
+        res.status(500).json({ success: false, message: 'Lỗi Server: ' + err.message });
     }
 });
 

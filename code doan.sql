@@ -324,3 +324,95 @@ ErrorHandler:
 END;
 GO
 EXEC sp_MuaNgay @UserID = 2, @ProductID = 1;
+USE ShopGame;
+GO
+
+-- Thêm danh mục Săn Pet và Thử Vận May
+INSERT INTO Categories (CategoryName, CategoryCode, ImageURL) VALUES 
+(N'Săn Pet Tím', 'DTCL_HUNT', 'images/dtcl3.jpg'),
+(N'Thử Vận May Pet', 'DTCL_LUCK', 'images/dtcl4.jpg');
+
+-- Thêm vài sản phẩm mẫu cho 2 mục này để test web
+DECLARE @HuntID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL_HUNT');
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, IsSold) VALUES 
+(@HuntID, N'Vé Săn Pet Gwen', 50000, N'Cơ hội nhận Gwen Tí Nị', 'images/dtcl3.jpg', 0);
+
+DECLARE @LuckID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL_LUCK');
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, IsSold) VALUES 
+(@LuckID, N'Hòm May Mắn 20k', 20000, N'Hên xui ra Pet xịn', 'images/dtcl4.jpg', 0);
+USE ShopGame;
+GO
+
+-- Lấy ID của danh mục "Liên Minh Huyền Thoại" (Mã LMHT)
+DECLARE @LmhtID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'LMHT');
+
+-- Thêm 4 acc mẫu vào danh mục này
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@LmhtID, N'Acc Yasuo Ma Kiếm VIP', 150000, N'Rank Vàng, Full thông tin', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_3.jpg', 'yasuo1', '123', 0),
+(@LmhtID, N'Acc Zed Tử Thần', 200000, N'Rank Bạch Kim, Skin đẹp', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zed_2.jpg', 'zed1', '123', 0),
+(@LmhtID, N'Acc Leesin Quyền Thái', 50000, N'Giá rẻ cho học sinh', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_4.jpg', 'lee1', '123', 0),
+(@LmhtID, N'Acc Lux Thập Đại', 300000, N'Full Skin Lux, Rank Kim Cương', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Lux_6.jpg', 'lux1', '123', 0);
+USE ShopGame;
+GO
+
+-- =======================================================
+-- 1. THÊM ACC LIÊN MINH - THÔNG THẠO CAO (LMHT_ZIN)
+-- =======================================================
+DECLARE @ZinID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'LMHT_ZIN');
+
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@ZinID, N'Acc Yasuo 2 Triệu Thông Thạo', 250000, N'Múa cực mượt, không mua phí đời', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_10.jpg', 'yasuo_2m', '123456', 0),
+(@ZinID, N'Best Zed Galaxy - One Champ', 300000, N'Zed Tử Thần Không Gian, Combo bao chuẩn', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zed_15.jpg', 'zed_onechamp', '123456', 0),
+(@ZinID, N'Lee Sin Quyền Thái - Insec God', 150000, N'Lee Sin 500k điểm, đá là trúng', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_4.jpg', 'lee_god', '123456', 0),
+(@ZinID, N'Riven Thần Kiếm - Combo Fast Q', 200000, N'Acc chuyên Top, Riven trùm sever', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Riven_9.jpg', 'riven_top', '123456', 0);
+
+
+-- =======================================================
+-- 2. THÊM ACC SERVER NƯỚC NGOÀI (LMHT_FOREIGN)
+-- =======================================================
+DECLARE @ForeignID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'LMHT_FOREIGN');
+
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@ForeignID, N'Acc Server Bắc Mỹ (NA) Full Champ', 500000, N'Ping 200, Full tướng, Rank Vàng', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ashe_11.jpg', 'na_user', '123', 0),
+(@ForeignID, N'Acc Server Hàn (KR) Rank Kim Cương', 1200000, N'Acc xịn, cần Fake IP để chơi', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_14.jpg', 'kr_faker', '123', 0),
+(@ForeignID, N'Acc Server Nhật Bản (JP) Voice Anime', 300000, N'Full Voice Nhật cực hay', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_20.jpg', 'jp_voice', '123', 0);
+
+
+-- =======================================================
+-- 3. THÊM ACC ĐẤU TRƯỜNG CHÂN LÝ (DTCL)
+-- =======================================================
+DECLARE @DtclID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL');
+
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@DtclID, N'Acc DTCL Rank Cao Thủ', 200000, N'Sẵn rank Cao Thủ, về chỉ việc leo Thách Đấu', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pengu_Cosplay_Tristana_0.jpg', 'tft_master', '123', 0),
+(@DtclID, N'Acc Full Sàn Đấu + Chưởng Lực', 150000, N'Nhiều sàn đẹp, hiệu ứng kết liễu xịn', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gwen_0.jpg', 'tft_arena', '123', 0);
+
+
+-- =======================================================
+-- 4. THÊM ACC DTCL PET TÍM (DTCL_PET)
+-- =======================================================
+DECLARE @PetID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL_PET');
+
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@PetID, N'Acc Có Yasuo Tí Nị Chiến Binh Rồng', 450000, N'Pet hiếm nhất game, múa sáo cực ngầu', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_19.jpg', 'pet_yasuo', '123', 0),
+(@PetID, N'Acc Có Yone Tí Nị', 350000, N'Pet mới ra mắt, hiệu ứng đẹp', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_1.jpg', 'pet_yone', '123', 0),
+(@PetID, N'Acc Có Lee Sin Tí Nị', 300000, N'Nộ Long Cước phiên bản cute', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_11.jpg', 'pet_lee', '123', 0);
+
+
+-- =======================================================
+-- 5. THÊM SẢN PHẨM SĂN PET & VẬN MAY (DTCL_HUNT, DTCL_LUCK)
+-- =======================================================
+-- Lưu ý: Nếu chưa có Category này thì Insert trước, nếu có rồi thì bỏ qua 2 dòng INSERT Categories
+IF NOT EXISTS (SELECT * FROM Categories WHERE CategoryCode = 'DTCL_HUNT')
+   INSERT INTO Categories (CategoryName, CategoryCode, ImageURL) VALUES (N'Săn Pet', 'DTCL_HUNT', 'images/hunt.jpg');
+
+IF NOT EXISTS (SELECT * FROM Categories WHERE CategoryCode = 'DTCL_LUCK')
+   INSERT INTO Categories (CategoryName, CategoryCode, ImageURL) VALUES (N'Thử Vận May', 'DTCL_LUCK', 'images/luck.jpg');
+
+DECLARE @HuntID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL_HUNT');
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@HuntID, N'Vé Săn Pet Gwen Tí Nị', 50000, N'Cơ hội 10% trúng Gwen Tí Nị', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gwen_1.jpg', 'code_gwen', '123', 0);
+
+DECLARE @LuckID INT = (SELECT CategoryID FROM Categories WHERE CategoryCode = 'DTCL_LUCK');
+INSERT INTO Products (CategoryID, Title, Price, Description, ImageURL, GameAccount, GamePassword, IsSold) VALUES 
+(@LuckID, N'Hòm May Mắn 20k', 20000, N'Random Acc (10% ra acc xịn)', 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_8.jpg', 'random_20k', '123', 0);

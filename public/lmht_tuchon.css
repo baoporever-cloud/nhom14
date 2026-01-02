@@ -1,328 +1,252 @@
-/* RESET NHẸ */
-*,
-*::before,
-*::after {
+/* === RESET & FONTS === */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
-  margin: 0;
-  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background-color: #0d1017;
+  background-color: #121212; /* Nền tối */
   color: #ffffff;
 }
 
-/* ===========================
-   HEADER
-   =========================== */
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-.topbar {
-    background: rgba(0, 0, 0, .65);
-  background-color: #111520;
-  border-bottom: 1px solid #181c2b;
-}
-
-.topbar-inner {
+/* === UTILITIES === */
+.lmht-container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 0 20px;
+}
 
+.section-header-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-}
-
-.logo {
-  display: flex;
   align-items: center;
-  gap: 8px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 15px;
 }
 
+.section-header-row h3 {
+  font-size: 1.5rem;
+  color: #ffc107; /* Vàng */
+  text-transform: uppercase;
+}
+
+/* === HEADER (Giữ nguyên) === */
+.topbar {
+  background: #000;
+  padding: 15px 0;
+  border-bottom: 1px solid #333;
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
 .logo-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #00b4ff, #00ffb2);
-  color: #05101f;
-  font-weight: 800;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-text {
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.nav {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.nav a {
-  font-size: 13px;
-  text-decoration: none;
-  color: #c4c8da;
-  text-transform: uppercase;
-}
-
-.nav a:hover {
-  color: #ffffff;
-}
-
-.auth {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-outline,
-.btn-primary {
-  font-size: 12px;
-  padding: 6px 10px;
+  background: #ffc107; color: #000; font-weight: 800;
+  width: 35px; height: 35px; display: flex; justify-content: center; align-items: center;
   border-radius: 4px;
-  cursor: pointer;
-  text-transform: uppercase;
-  border: 1px solid transparent;
+}
+.logo-text { font-weight: 700; font-size: 1.2rem; color: #ffc107; }
+.nav { display: flex; gap: 25px; }
+.nav a { font-weight: 600; transition: color 0.3s; }
+.nav a:hover { color: #ffc107; }
+.auth { display: flex; gap: 15px; }
+.btn-outline-login, .btn-primary-reg {
+  padding: 8px 18px; font-weight: 600; border-radius: 4px;
+}
+.btn-outline-login {
+  border: 2px solid #ffc107; color: #ffc107;
+}
+.btn-primary-reg {
+  background: #ffc107; color: #000;
 }
 
-.btn-outline {
-  background-color: transparent;
-  color: #ffffff;
-  border-color: #2c344a;
-}
-
-.btn-outline:hover {
-  border-color: #00b4ff;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #00b4ff, #00ffb2);
-  color: #05101f;
-  border: none;
-}
-
-.btn-primary:hover {
-  filter: brightness(1.05);
-}
-/* ===========================
-   PAGE LIÊN MINH TỰ CHỌN
-   =========================== */
-
-/* SECTION danh sách gói giá */
-.lmht-list {
-  padding: 24px 0 32px;
-}
-
-.lmht-list h2 {
-  font-size: 20px;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-}
-
-/* GRID các card giá */
-.lmht-grid {
-   display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 ô / dòng */
-    gap: 20px; /* khoảng cách giữa các ô */
-    width: 100%;
-}
-
-/* CARD từng mức giá */
-.lmht-card {
-  background-color: #000;          /* giống screenshot: khối đen */
-  border: 1px solid #222;
-  padding: 10px 10px 16px;
+/* === HERO SECTION (Banner) === */
+.lmht-hero {
+  background: url('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Morgana_0.jpg') no-repeat center center/cover;
+  padding: 80px 0;
   text-align: center;
-  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  position: relative;
+}
+.lmht-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6); /* Lớp phủ tối */
+}
+.lmht-hero .lmht-container { position: relative; z-index: 1; }
+.lmht-hero h1 {
+  font-size: 2.5rem; font-weight: 800; color: #ffc107;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-/* Thanh tiêu đề giá: DƯỚI 100K, 100K - 500K... */
-.lmht-tag {
-  background-color: #000;
-  border: 1px solid #00ffbf;
-  color: #00ffbf;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 8px;
-  margin: 0 4px 10px;
-  text-transform: uppercase;
-  text-align: center;
+/* === PRODUCT SECTION === */
+.product-section { padding: 40px 0; }
+
+/* LƯỚI SẢN PHẨM (Căn chỉnh lại) */
+.product-grid {
+  display: grid;
+  /* Tự động chia cột, mỗi cột tối thiểu 260px */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px; /* Khoảng cách giữa các thẻ */
 }
 
-/* Khung ảnh trong card */
-/* Card ảnh trong danh mục game */
-.lmht-img-wrap {
-  height: 220px;          /* chiều cao tối đa bạn muốn (có thể chỉnh 200–260) */
-  overflow: hidden;       /* cắt bớt phần thừa */
+/* THẺ SẢN PHẨM (PRODUCT CARD) */
+.product-card {
+  background: #1e1e1e; /* Màu nền thẻ */
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden; /* Ẩn phần thừa */
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
 }
 
-/* Ảnh bên trong */
-.lmht-img-wrap img {
+.product-card:hover {
+  transform: translateY(-5px); /* Hiệu ứng nhô lên khi di chuột */
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.2);
+  border-color: #ffc107;
+}
+
+/* ẢNH SẢN PHẨM */
+.card-image {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* Tỷ lệ khung hình 16:9 (giúp ảnh đồng đều) */
+  overflow: hidden;
+}
+
+.card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* phóng ảnh vừa khung, không méo */
+  object-fit: cover; /* Đảm bảo ảnh phủ kín khung mà không bị méo */
+  transition: transform 0.5s;
 }
 
+.product-card:hover .card-image img {
+  transform: scale(1.1); /* Phóng to ảnh nhẹ khi di chuột */
+}
 
-/* Nút "Xem tất cả" */
-.lmht-btn {
-  margin-top: 8px;
-  padding: 7px 18px;
+/* NHÃN GIẢM GIÁ */
+.badge-discount {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #d32f2f; /* Đỏ */
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
   border-radius: 4px;
-  border: none;
-  background-color: #ffffff;
-  color: #000;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  z-index: 2;
 }
 
-.lmht-btn:hover {
-  background-color: #f0f0f0;
+/* PHẦN THÔNG TIN BÊN DƯỚI ẢNH */
+.card-details {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Khoảng cách giữa các dòng thông tin */
+  flex-grow: 1; /* Để các nút luôn nằm dưới cùng */
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .lmht-hero h1 {
-    font-size: 20px;
-  }
-
-  .lmht-grid {
-    gap: 12px;
-  }
-}
-/* ===========================
-   RESPONSIVE
-   =========================== */
-
-@media (max-width: 768px) {
-  .topbar-inner {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .nav {
-    justify-content: center;
-  }
-
-  .filters-container {
-    flex-direction: column;
-  }
-
-  #btnFilter {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .accounts-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-}
-.auth .btn {
-  padding: 8px 16px;
-  background: linear-gradient(90deg, #00b3ff, #00ffd1);
-  border-radius: 6px;
-  color: #000;
-  font-weight: 600;
-  text-decoration: none;
-  transition: .2s;
+/* TIÊU ĐỀ SẢN PHẨM */
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+  /* Giới hạn 2 dòng, quá sẽ hiện dấu ... */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.6rem; /* Chiều cao cố định cho 2 dòng */
 }
 
-.auth .btn:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-.custom-footer {
-  background: #0a0a0a;
-  padding: 35px 20px;
-  color: #bfbfbf;
-  font-size: 15px;
-}
-
-.footer-row {
-  max-width: 1200px;
-  margin: auto;
+/* DÒNG TAG (Mã số & Trạng thái) */
+.tags-row {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
+  font-size: 0.85rem;
+  color: #aaa;
 }
 
-.footer-col {
-  flex: 1;
-  min-width: 250px;
+.tag-status i {
+  color: #4caf50; /* Xanh lá */
+  margin-right: 5px;
 }
 
-.custom-footer p {
-  margin: 6px 0;
+/* DÒNG GIÁ TIỀN */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: auto; /* Đẩy xuống gần nút */
 }
 
-.yellow {
-  color: #ffcc00;
-  font-weight: bold;
+.price-old {
+  text-decoration: line-through;
+  color: #777;
+  font-size: 0.9rem;
 }
 
-.white {
-  color: #fff;
+.price-new {
+  color: #ffc107; /* Vàng */
+  font-size: 1.3rem;
   font-weight: 700;
 }
 
-/* Hộp hotline */
-.footer-box {
+/* DÒNG NÚT HÀNH ĐỘNG */
+.action-row {
   display: flex;
-  align-items: center;
-  background: #151515;
-  border: 1px solid #333;
-  padding: 12px 16px;
-  border-radius: 6px;
+  gap: 10px;
   margin-top: 10px;
 }
 
-.icon-call {
-  font-size: 28px;
-  margin-right: 10px;
-  color: #ffcc00;
-}
-
-/* Social Icon */
-.social-icons img {
-  width: 32px;
-  height: 32px;
-  margin-right: 10px;
-  transition: 0.2s;
+.btn-cart, .btn-buy {
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.social-icons img:hover {
-  transform: scale(1.15);
+.btn-cart {
+  background: #333;
+  color: #fff;
+  width: 45px; /* Nút giỏ hàng hình vuông */
 }
+.btn-cart:hover { background: #555; }
 
-/* Responsive */
-@media(max-width: 768px){
-  .footer-row{
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-box{
-    justify-content: center;
-  }
-
-  .social-icons{
-    justify-content: center;
-    display: flex;
-  }
+.btn-buy {
+  flex-grow: 1; /* Nút Mua Ngay chiếm phần còn lại */
+  background: #ffc107;
+  color: #000;
+  gap: 8px;
 }
+.btn-buy:hover { background: #e0a800; }
 
-
-
+/* === FOOTER (Giữ nguyên) === */
+.custom-footer {
+  background: #000;
+  padding: 30px 0;
+  text-align: center;
+  border-top: 1px solid #333;
+}

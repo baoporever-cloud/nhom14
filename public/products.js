@@ -1,61 +1,93 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- 1. KIỂM TRA ĐĂNG NHẬP NGAY LẬP TỨC ---
     checkLoginStatus();
 
-    // --- 2. LOGIC TẢI SẢN PHẨM (Code cũ của bạn) ---
     let categoryCode = '';
-    const path = window.location.pathname;
+    
+    // Ưu tiên lấy từ HTML trước (cho chắc chắn)
+    const container = document.getElementById("product-list");
+    if (container && container.getAttribute("data-category") !== "ALL") {
+        categoryCode = container.getAttribute("data-category");
+    } 
+    // Nếu HTML không có hoặc để ALL thì mới tự đoán qua đường dẫn
+    else {
+        const path = window.location.pathname;
 
-    // Phân loại trang
-    if (path.includes('lmht_giamgia')) categoryCode = 'LMHT_SALE';
-    else if (path.includes('lmht_thongthao')) categoryCode = 'LMHT_ZIN';
-    else if (path.includes('lmht_svnuocngoai')) categoryCode = 'LMHT_FOREIGN';
-    else if (path.includes('lmht')) categoryCode = 'LMHT'; 
-    else if (path.includes('lienquan')) categoryCode = 'LQ';
-    else if (path.includes('freefire')) categoryCode = 'FF';
-    else if (path.includes('dtcl')) categoryCode = 'DTCL';
-    else if (path.includes('tocchien')) categoryCode = 'TC';
-    else if (path.includes('valorant')) categoryCode = 'VAL';
+        // --- QUAN TRỌNG: CÁC MỤC CON PHẢI ĐỂ TRÊN ---
+        if (path.includes('lmht_giamgia')) categoryCode = 'LMHT_SALE';
+        else if (path.includes('lmht_thongthao')) categoryCode = 'LMHT_ZIN'; // <--- Dòng này phải đứng trước
+        else if (path.includes('lmht_svnuocngoai')) categoryCode = 'LMHT_FOREIGN';
+        
+        // --- MỤC CHUNG (TỰ CHỌN) PHẢI ĐỂ CUỐI CÙNG ---
+        else if (path.includes('lmht')) categoryCode = 'LMHT'; 
+        
+        // Các game khác
+        else if (path.includes('dtcl_pettim')) categoryCode = 'DTCL_PET';
+        else if (path.includes('sanpettim')) categoryCode = 'DTCL_HUNT';
+        else if (path.includes('thuvanmay')) categoryCode = 'DTCL_LUCK';
+        else if (path.includes('dtcl')) categoryCode = 'DTCL';
+    }
 
-    // Gọi hàm tải dữ liệu nếu xác định được mã game
     if (categoryCode) {
         loadProducts(categoryCode);
     }
 });
 
 // --- HÀM 1: TẢI SẢN PHẨM ---
+// --- HÀM 1: TẢI SẢN PHẨM (ĐÃ SỬA LẠI HTML CHO KHỚP VỚI CSS) ---
 async function loadProducts(code) {
     const grid = document.getElementById("product-list");
     if (!grid) return;
 
+    // Thêm hiệu ứng loading
+    grid.innerHTML = '<p style="color:#aaa; width:100%; text-align:center;">Đang tải dữ liệu...</p>';
+
     try {
-        // Nếu là mã LMHT_SALE nhưng trong DB bạn chưa tạo CategoryCode này thì nó sẽ không tìm thấy.
-        // Tạm thời nếu test lỗi, bạn có thể thử đổi code thành 'LMHT' để xem nó hiện gì không.
         const res = await fetch(`/api/products/${code}`);
         const products = await res.json();
 
-        grid.innerHTML = "";
+        grid.innerHTML = ""; // Xóa loading
 
         if (products.length === 0) {
-            grid.innerHTML = "<p style='color:white; text-align:center; width:100%'>Hiện chưa có acc nào.</p>";
+            grid.innerHTML = "<p style='color:#aaa; text-align:center; width:100%'>Chưa có acc nào trong mục này.</p>";
             return;
         }
 
         products.forEach(acc => {
+            // Định dạng giá tiền
             const price = new Intl.NumberFormat('vi-VN').format(acc.Price);
-            
+            const oldPrice = new Intl.NumberFormat('vi-VN').format(acc.Price * 1.3); // Giá ảo để gạch ngang
+
+            // Tạo thẻ div bao ngoài
             const card = document.createElement("div");
-            card.className = "game-card"; // Class này sẽ nhận CSS bạn vừa thêm
-            
+            card.className = "product-card"; // [QUAN TRỌNG] Tên class phải là product-card
+
+            // Nội dung HTML bên trong (Khớp với CSS lmht_tuchon.css)
             card.innerHTML = `
-                <div class="card-img-wrap">
-                    <img src="${acc.ImageURL}" alt="${acc.Title}" onerror="this.src='https://via.placeholder.com/300'">
+                <div class="card-image">
+                    <span class="badge-discount">-30%</span>
+                    <img src="${acc.ImageURL}" alt="${acc.Title}" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
                 </div>
-                <h3>${acc.Title}</h3>
-                <p>Mã số: #${acc.ProductID}</p>
-                <p style="color: #ffc107; font-weight: bold; font-size: 16px;">${price} VNĐ</p>
-                <button onclick="buyNow(${acc.ProductID})">MUA NGAY</button>
+                
+                <div class="card-details">
+                    <div class="product-title" title="${acc.Title}">${acc.Title}</div>
+                    
+                    <div class="tags-row">
+                        <span class="tag-id">#${acc.ProductID}</span>
+                        <span class="tag-status"><i class="fa-solid fa-circle-check"></i> SẴN SÀNG</span>
+                    </div>
+
+                    <div class="price-row">
+                        <span class="price-old">${oldPrice} đ</span>
+                        <span class="price-new">${price} đ</span>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn-cart"><i class="fa-solid fa-cart-shopping"></i></button>
+                        <a href="javascript:void(0)" class="btn-buy" onclick="buyNow(${acc.ProductID})">
+                            <i class="fa-regular fa-credit-card"></i> Mua ngay
+                        </a>
+                    </div>
+                </div>
             `;
             
             grid.appendChild(card);
@@ -63,7 +95,7 @@ async function loadProducts(code) {
 
     } catch (err) {
         console.error(err);
-        grid.innerHTML = "<p style='color:red; text-align:center;'>Lỗi kết nối Server!</p>";
+        grid.innerHTML = "<p style='color:red; text-align:center;'>Lỗi kết nối Server! Hãy kiểm tra 'node server.js'</p>";
     }
 }
 
