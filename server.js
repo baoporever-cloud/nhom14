@@ -9,12 +9,12 @@ const PORT = 3000;
 // --- 1. CẤU HÌNH KẾT NỐI SQL SERVER ---
 const config = {
     user: 'sa',
-    password: '123456',      // <--- Thay mật khẩu của bạn vào đây
-    server: 'localhost',  // Hoặc 'localhost\\SQLEXPRESS'
+    password: '123456',      // <--- Đảm bảo mật khẩu đúng
+    server: 'localhost',     // Hoặc 'localhost\\SQLEXPRESS'
     database: 'ShopGame',
     options: {
-        encrypt: true,
-        trustServerCertificate: true // Bắt buộc true khi chạy Local
+        encrypt: false,      // Đổi thành false để tránh lỗi SSL certificate ở local
+        trustServerCertificate: true 
     }
 };
 
@@ -22,10 +22,9 @@ const config = {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'))); // Folder chứa HTML/CSS/JS
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 // --- 3. HÀM KẾT NỐI DÙNG CHUNG (connectDB) ---
-// Hàm này giúp tái sử dụng kết nối, tránh lỗi khi gọi API nhiều lần
 async function connectDB() {
     try {
         let pool = await sql.connect(config);
@@ -50,7 +49,6 @@ app.post('/api/auth/register', async (req, res) => {
         const { username, email, password } = req.body;
         const pool = await connectDB();
 
-        // Kiểm tra trùng tên
         const checkUser = await pool.request()
             .input('u', sql.VarChar, username)
             .query("SELECT * FROM Users WHERE Username = @u");
@@ -59,7 +57,6 @@ app.post('/api/auth/register', async (req, res) => {
             return res.json({ success: false, message: 'Tên tài khoản đã tồn tại!' });
         }
 
-        // Thêm User mới
         await pool.request()
             .input('u', sql.VarChar, username)
             .input('e', sql.VarChar, email)
@@ -73,7 +70,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// --- API 2: ĐĂNG NHẬP ---
+// --- API 2: ĐĂNG NHẬP (QUAN TRỌNG: Đã thêm UserID) ---
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -91,10 +88,11 @@ app.post('/api/auth/login', async (req, res) => {
                 message: 'Đăng nhập thành công',
                 token: 'fake-jwt-token',
                 user: {
+                    id: user.UserID,        // <--- ĐÃ SỬA: Trả về ID để lưu localStorage
                     username: user.Username,
                     balance: user.Balance,
                     role: user.Role,
-                    fullname: user.Fullname // Trả về thêm Fullname để hiển thị
+                    fullname: user.Fullname
                 }
             });
         } else {
@@ -132,14 +130,15 @@ app.post('/api/topup', async (req, res) => {
     }
 });
 
-// --- API 4: LẤY THÔNG TIN USER (Header & Sidebar) ---
-// *Lưu ý: Đang hardcode UserID = 2 theo yêu cầu của bạn. 
-// Nếu muốn động, hãy gửi username từ client lên.
+// --- API 4: LẤY THÔNG TIN USER ---
+// Đã sửa để nhận userid động từ frontend (nếu có), mặc định là 2 nếu không gửi
 app.get('/api/info', async (req, res) => {
     try {
+        const userId = req.query.userid || 2; // Nhận ID từ query
         const pool = await connectDB();
         const result = await pool.request()
-            .query("SELECT Fullname, Email, Balance FROM Users WHERE UserID = 2");
+            .input('uid', sql.Int, userId)
+            .query("SELECT Fullname, Email, Balance FROM Users WHERE UserID = @uid");
         
         if (result.recordset.length > 0) {
             res.json(result.recordset[0]);
@@ -149,23 +148,27 @@ app.get('/api/info', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
-// --- API 5: LẤY KHO ĐỒ (Inventory) ---
+// --- API 5: LẤY KHO ĐỒ ---
 app.get('/api/inventory', async (req, res) => {
     try {
+        const userId = req.query.userid || 2;
         const pool = await connectDB();
         const result = await pool.request()
-            .query("SELECT * FROM Inventory WHERE UserID = 2");
+            .input('uid', sql.Int, userId)
+            .query("SELECT * FROM Inventory WHERE UserID = @uid");
         
         res.json(result.recordset);
     } catch (err) { res.status(500).send(err.message); }
 });
 
-// --- API 6: LẤY LỊCH SỬ (Transactions) ---
+// --- API 6: LẤY LỊCH SỬ ---
 app.get('/api/history', async (req, res) => {
     try {
+        const userId = req.query.userid || 2;
         const pool = await connectDB();
         const result = await pool.request()
-            .query("SELECT * FROM Transactions WHERE UserID = 2 ORDER BY CreatedDate DESC");
+            .input('uid', sql.Int, userId)
+            .query("SELECT * FROM Transactions WHERE UserID = @uid ORDER BY CreatedDate DESC");
         
         res.json(result.recordset);
     } catch (err) { res.status(500).send(err.message); }
@@ -174,12 +177,14 @@ app.get('/api/history', async (req, res) => {
 // --- API 7: CẬP NHẬT TÊN HIỂN THỊ ---
 app.post('/api/update-name', async (req, res) => {
     try {
-        const { newName } = req.body;
+        const { newName, userid } = req.body; // Cần gửi thêm userid từ frontend
+        const uid = userid || 2; 
+
         const pool = await connectDB();
-        
         await pool.request()
             .input('name', sql.NVarChar, newName)
-            .query("UPDATE Users SET Fullname = @name WHERE UserID = 2");
+            .input('uid', sql.Int, uid)
+            .query("UPDATE Users SET Fullname = @name WHERE UserID = @uid");
             
         res.send('success');
     } catch (err) { res.status(500).send(err.message); }
@@ -203,6 +208,45 @@ app.get('/api/products/:categoryCode', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Lỗi Server");
+    }
+});
+
+// =============================================================
+// API 9: XỬ LÝ MUA HÀNG (Sửa lỗi tên hàm connect)
+// =============================================================
+app.get('/buy', async (req, res) => {
+    try {
+        const productId = req.query.id;
+        const userId = req.query.userid;
+
+        if (!productId || !userId) {
+            return res.status(400).json({ status: 'Loi', message: 'Thiếu thông tin (ID sản phẩm hoặc User).' });
+        }
+
+        // --- SỬA LỖI Ở ĐÂY: Dùng connectDB() thay vì connectToDb() ---
+        const pool = await connectDB();
+
+        // Gọi Stored Procedure 'sp_MuaNgay'
+        const result = await pool.request()
+            .input('UserID', sql.Int, userId)
+            .input('ProductID', sql.Int, productId)
+            .execute('sp_MuaNgay');
+
+        if (result.recordset.length > 0) {
+            const data = result.recordset[0];
+            res.json({
+                status: data.TrangThai,      
+                message: data.ThongBao,
+                account: data.GameAccount || '',
+                password: data.GamePassword || ''
+            });
+        } else {
+            res.json({ status: 'Loi', message: 'Không nhận được phản hồi từ Database.' });
+        }
+
+    } catch (err) {
+        console.error("Lỗi server:", err);
+        res.status(500).json({ status: 'Loi', message: 'Lỗi Server: ' + err.message });
     }
 });
 
